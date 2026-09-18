@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head> 
+  <script>
+    // Перехватываем нажатие на кнопку назад или попытку уйти с сайта
+    window.addEventListener('popstate', function(event) {
+        // Если пользователь пытается вернуться назад и уходит с внутренних страниц, 
+        // вместо GitHub отправляем его на главную страницу сайта
+        window.location.href = 'index.html';
+    });
+</script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Secret Friends of Animals</title>
