@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head> 
+<script>
+        if (!sessionStorage.getItem('visited')) {
+            sessionStorage.setItem('visited', 'true');
+            if (window.location.pathname.indexOf('index.html') === -1) {
+                window.history.replaceState(null, '', 'index.html');
+            }
+        }
+    </script>
+
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Secret Friends of Animals</title>
