@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head> 
-<script>
-    // Принудительно добавляем текущую страницу в историю при самом первом входе
-    window.addEventListener('load', function() {
-        if (window.history.length === 1 || document.referrer.includes('github.com')) {
-            window.history.pushState({page: 1}, document.title, window.location.href);
-        }
-    });
+    <!-- Скрипт вставляется сюда, прямо под тег head -->
+    <script>
+        window.addEventListener('load', function() {
+            if (window.history.length === 1 || document.referrer.includes('github.com')) {
+                window.history.pushState({page: 1}, document.title, window.location.href);
+            }
+        });
 
-    // Когда пользователь нажимает кнопку назад, перенаправляем на главную
-    window.addEventListener('popstate', function(event) {
-        window.location.href = 'index.html';
-    });
-</script>
+        window.addEventListener('popstate', function(event) {
+            window.location.href = 'index.html';
+        });
+    </script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Secret Friends of Animals</title>
