@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
+<script>
+    // Проверяем, есть ли предыдущая страница в истории браузера
+    // Если пользователь зашел сразу по ссылке с GitHub, история пуста (length <= 2)
+    if (window.history.length <= 2) {
+        // Принудительно добавляем в историю адрес главной страницы
+        window.history.pushState({page: 'home'}, '', 'index.html');
+    }
+</script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Secret Friends of Animals</title>
