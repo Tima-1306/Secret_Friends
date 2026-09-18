@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head> 
-  <script>
-    // Перехватываем нажатие на кнопку назад или попытку уйти с сайта
+<script>
+    // Принудительно добавляем текущую страницу в историю при самом первом входе
+    window.addEventListener('load', function() {
+        if (window.history.length === 1 || document.referrer.includes('github.com')) {
+            window.history.pushState({page: 1}, document.title, window.location.href);
+        }
+    });
+
+    // Когда пользователь нажимает кнопку назад, перенаправляем на главную
     window.addEventListener('popstate', function(event) {
-        // Если пользователь пытается вернуться назад и уходит с внутренних страниц, 
-        // вместо GitHub отправляем его на главную страницу сайта
         window.location.href = 'index.html';
     });
 </script>
