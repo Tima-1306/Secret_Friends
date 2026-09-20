@@ -943,8 +943,8 @@ function showToast(msg){
   setTimeout(function(){t.classList.remove('on');},2800);
 }
 
-renderSteps();renderDir();renderStories();renderInit();renderBlog();renderArticles();
-
+renderSteps();renderDir();renderStories();renderInits();renderBlog();renderArticles();
+    
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     let isAdmin = localStorage.getItem('isSiteAdmin') === 'true';
@@ -958,7 +958,7 @@ document.addEventListener("DOMContentLoaded", function() {
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    // Если это НЕ админ, то мы скрываем эти ссылки от него
+    // Если это НЕ админ, то мы скрываем эти ссылки от обычных пользователей
     if (!isAdmin) {
         document.querySelectorAll('.user-only').forEach(function(el) {
             el.style.display = 'none'; 
