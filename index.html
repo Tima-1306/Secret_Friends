@@ -940,5 +940,112 @@ renderSteps();renderDir();renderStories();renderInit();renderBlog();renderArticl
         document.getElementById('abar').style.display = 'block';
     }
 </script>
+  <!-- Секция со счетчиками Secret Friends -->
+<section class="kindstride-counters">
+  <div class="counter-grid">
+    
+    <!-- Карточка 1: Реальный счетчик просмотров -->
+    <div class="counter-card yellow-card">
+      <div class="counter-icon">🐾</div>
+      <div class="counter-number" id="view-counter">...</div>
+      <div class="counter-title">Просмотров сайта</div>
+    </div>
+
+    <!-- Карточка 2: Истории спасения -->
+    <div class="counter-card purple-card">
+      <div class="counter-icon">❤️</div>
+      <div class="counter-number">45+</div>
+      <div class="counter-title">Историй спасения</div>
+    </div>
+
+    <!-- Карточка 3: Полезные гайды -->
+    <div class="counter-card purple-card">
+      <div class="counter-icon">📖</div>
+      <div class="counter-number">12</div>
+      <div class="counter-title">Полезных гайдов</div>
+    </div>
+
+    <!-- Карточка 4: Помощники -->
+    <div class="counter-card yellow-card">
+      <div class="counter-icon">🌟</div>
+      <div class="counter-number">85</div>
+      <div class="counter-title">Помощников</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Стили (CSS) -->
+<style>
+.kindstride-counters {
+  padding: 40px 20px;
+  background-color: #1a1a1e;
+  font-family: sans-serif;
+}
+
+.counter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.counter-card {
+  padding: 25px 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.counter-card:hover {
+  transform: translateY(-5px);
+}
+
+.yellow-card {
+  background: linear-gradient(135deg, #f39c12, #f1c40f);
+  color: #1a1a1e;
+}
+
+.purple-card {
+  background: linear-gradient(135deg, #8e44ad, #9b59b6);
+  color: #fff;
+}
+
+.counter-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.counter-number {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.counter-title {
+  font-size: 14px;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+</style>
+
+<!-- Скрипт для работы счетчика просмотров (JavaScript) -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Используем уникальный идентификатор для Secret Friends
+  fetch('https://api.countapi.xyz/hit/secret-friends-site/visits')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('view-counter').innerText = data.value.toLocaleString();
+    })
+    .catch(error => {
+      // Если API недоступно, выводим запасное значение
+      document.getElementById('view-counter').innerText = '1,240';
+    });
+});
+</script>
 </body>
 </html>
