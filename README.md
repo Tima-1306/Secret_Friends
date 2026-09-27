@@ -2,7 +2,7 @@
 
 # Secret Friends of Animals 🐾
 
-*A student-quietly working to make the lives of stray animals better.*
+*A student-led movement quietly working to make the lives of stray animals better.*
 
 </div>
 
