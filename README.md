@@ -44,9 +44,14 @@
 
 ---
 
+<!-- Надёжный счётчик просмотров -->
 <div align="center">
 
-<!-- Надёжный счётчик просмотров -->
-<img src="https://komarev.com/ghpvc/?username=Tima-1306&repo=Secret_Friends&color=green&style=flat-square" alt="Visitor Count" />
+<a href="https://github.com/Tima-1306/Secret_Friends">
+  <img src="https://komarev.com/ghpvc/?username=Tima-1306&repo=Secret_Friends&label=Secret+Friends&color=2ea44f&style=flat" alt="Visitor Count" />
+</a>
+
+</div>
+
 
 </div>
