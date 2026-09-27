@@ -10,7 +10,7 @@
 
 ## 🌟 About Us / School Movement
 * **Location:** Tashkent, Uzbekistan
-* **Goal:** A school movement quietly working to make the lives of stray animals better.
+* **Goal:** A student-led movement quietly working to make the lives of stray animals better.
 
 > "You don't have to save everyone. You just need to see — truly see — and do what you can, where you are, with what you have."
 
@@ -26,7 +26,7 @@
 
 ### 🌟 О нас / Школьное движение
 * **Локация:** Ташкент, Узбекистан
-* **Цель:** Школьное движение, которое тихо работает над тем, чтобы сделать жизнь бездомных животных лучше.
+* **Цель:** Организованный студентам движение, которое безмятежно работает над тем, чтобы сделать жизнь бездомных животных лучше.
 
 > "Не нужно спасать всех. Нужно просто увидеть — по-настоящему увидеть — и сделать что можешь, там где ты, с тем что есть."
 
@@ -36,7 +36,7 @@
 
 ### 🌟 Biz haqimizda / Maktab harakati
 * **Joylashuv:** Toshkent, O'zbekiston
-* **Maqsad:** Ko'cha hayvonlarining hayotini yaxshilash uchun jimgina ishlayotgan o'quvchilar harakati.
+* **Maqsad:** Ko'cha hayvonlarining hayotini yaxshilash uchun xotirjamlik bilan ishlayotgan o'quvchini harakati.
 
 * **Rasmiy veb-sayt:** [Yashirin Do'stlar](https://tima-1306.github.io/Secret_Friends/)
 
