@@ -224,7 +224,7 @@ footer{background:var(--ink);color:#fff;padding:40px 0;margin-top:60px;}
 <body>
 
 <!-- ADMIN BAR -->
-<div id="abar">
+<div id="abar" style="display: none;">
   <span>⬡ Secret Friends Admin</span>
   <div>
     <button class="abtn" onclick="toggleEditor()">✦ <span data-key="adm_write">Write journal entry</span></button>
@@ -933,6 +933,12 @@ function showToast(msg){
 
 renderSteps();renderDir();renderStories();renderInit();renderBlog();renderArticles();
 
+</script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('admin') === 'true') {
+        document.getElementById('abar').style.display = 'block';
+    }
 </script>
 </body>
 </html>
