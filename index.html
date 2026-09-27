@@ -1,18 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
-    <!-- Скрипт вставляется сюда, прямо под тег head -->
-    <script>
-        window.addEventListener('load', function() {
-            if (window.history.length === 1 || document.referrer.includes('github.com')) {
-                window.history.pushState({page: 1}, document.title, window.location.href);
-            }
-        });
-
-        window.addEventListener('popstate', function(event) {
-            window.location.href = 'index.html';
-        });
-    </script>
+<head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Secret Friends of Animals</title>
@@ -943,32 +931,8 @@ function showToast(msg){
   setTimeout(function(){t.classList.remove('on');},2800);
 }
 
-renderSteps();renderDir();renderStories();renderInits();renderBlog();renderArticles();
-    
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    let isAdmin = localStorage.getItem('isSiteAdmin') === 'true';
-    const urlParams = new URLSearchParams(window.location.search);
-    const secretKey = urlParams.get('key');
-    const MY_SECRET_PASSWORD = "vet_admin_2026"; 
-
-    if (secretKey === MY_SECRET_PASSWORD) {
-        localStorage.setItem('isSiteAdmin', 'true');
-        isAdmin = true;
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-
-    // Если это НЕ админ, то мы скрываем эти ссылки от обычных пользователей
-    if (!isAdmin) {
-        document.querySelectorAll('.user-only').forEach(function(el) {
-            el.style.display = 'none'; 
-        });
-    }
-});
-</script>
+renderSteps();renderDir();renderStories();renderInit();renderBlog();renderArticles();
 
 </script>
-    <a href="#journal" class="user-only">Write Journal Entry</a>
-<a href="#article" class="user-only">New Article</a>
 </body>
 </html>
