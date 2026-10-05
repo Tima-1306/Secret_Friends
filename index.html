@@ -934,11 +934,17 @@ function showToast(msg){
 renderSteps();renderDir();renderStories();renderInit();renderBlog();renderArticles();
 
 </script>
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('admin') === 'true') {
-        document.getElementById('abar').style.display = 'block';
-    }
+  const urlParams = new URLSearchParams(window.location.search);
+
+// Если в ссылке есть ?admin=true, сохраняем это в памяти телефона
+if (urlParams.get('admin') === 'true') {
+    localStorage.setItem('isAdmin', 'true');
+}
+
+// Если вы уже были авторизованы ранее (или перешли по ссылке только что), показываем панель
+if (localStorage.getItem('isAdmin') === 'true') {
+    document.getElementById('abar').style.display = 'block';
+}
 </script>
 </body>
 </html>
