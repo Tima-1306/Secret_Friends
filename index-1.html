@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Secret Friends of Animals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ink:#1C1C1E;--ink2:#3A3A3C;--ink3:#636366;--ink4:#AEAEB2;
+  --paper:#F7F5F0;--paper2:#EFECE5;--paper3:#E5E1D8;
+  --moss:#2D4A1E;--mossmid:#4A7A33;--mossl:#D4E8C2;--mossp:#EEF6E6;
+  --amber:#7C4F1A;--amberp:#FBF4EA;
+  --slate:#1A3A4A;--slatep:#EBF3F8;
+  --red:#7A2020;--redl:#F5D0D0;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+  --r:6px;--rl:12px;--rxl:20px;
+  --shl:0 4px 20px rgba(0,0,0,.10);
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.6;font-size:15px;}
+
+/* ADMIN BAR */
+#abar{background:var(--ink);color:#fff;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;font-size:12px;gap:8px;flex-wrap:wrap;}
+#abar span{opacity:.6;font-family:monospace;}
+.abtn{background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;padding:4px 14px;border-radius:20px;cursor:pointer;font-size:11px;font-family:monospace;transition:all .15s;margin-left:4px;}
+.abtn:hover{background:rgba(255,255,255,.12);}
+
+/* LANG */
+#lbar{background:var(--paper2);border-bottom:1px solid var(--paper3);padding:6px 24px;display:flex;justify-content:flex-end;gap:6px;}
+.lb{font-size:11px;font-weight:600;padding:3px 12px;border-radius:20px;border:1px solid var(--paper3);cursor:pointer;background:transparent;color:var(--ink3);font-family:monospace;letter-spacing:.5px;transition:all .15s;}
+.lb:hover{color:var(--ink);border-color:var(--ink4);}
+.lb.on{background:var(--moss);color:#fff;border-color:var(--moss);}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--paper3);padding:0 24px;}
+.navi{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:58px;}
+.logo{font-family:var(--serif);font-size:17px;color:var(--ink);display:flex;align-items:center;gap:10px;cursor:pointer;}
+.logo-mark{width:32px;height:32px;background:var(--moss);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.navls{display:flex;gap:2px;flex-wrap:wrap;}
+.nl{font-size:13px;color:var(--ink3);padding:6px 12px;border-radius:var(--r);cursor:pointer;border:none;background:transparent;font-family:var(--sans);transition:all .15s;white-space:nowrap;}
+.nl:hover{color:var(--ink);background:var(--paper2);}
+.nl.on{color:var(--moss);font-weight:500;}
+
+/* PAGES */
+.pg{display:none;}.pg.on{display:block;}
+.w{max-width:1000px;margin:0 auto;padding:0 24px;}
+
+/* HERO */
+.hero{padding:72px 0 56px;border-bottom:1px solid var(--paper3);}
+.eyebrow{font-family:monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mossmid);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.eyebrow::after{content:'';flex:1;height:1px;background:var(--mossl);}
+.hero h1{font-family:var(--serif);font-size:clamp(36px,5vw,58px);line-height:1.15;letter-spacing:-.5px;margin-bottom:8px;}
+.hero h1 em{font-style:italic;color:var(--mossmid);}
+.hero-sub{font-size:15px;color:var(--ink3);max-width:520px;line-height:1.75;margin-bottom:32px;}
+.hacts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px;}
+.bp{background:var(--moss);color:#fff;padding:11px 24px;border-radius:var(--r);border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:500;transition:background .2s;}
+.bp:hover{background:var(--mossmid);}
+.bs2{background:transparent;color:var(--ink);padding:11px 24px;border-radius:var(--r);border:1px solid var(--paper3);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:500;transition:all .2s;}
+.bs2:hover{border-color:var(--ink4);background:var(--paper2);}
+.manifesto{background:var(--mossp);border-left:3px solid var(--mossmid);border-radius:0 var(--rl) var(--rl) 0;padding:20px 24px;max-width:620px;}
+.manifesto p{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--moss);line-height:1.65;}
+.manifesto cite{display:block;font-family:monospace;font-size:11px;color:var(--mossmid);margin-top:10px;font-style:normal;letter-spacing:.5px;}
+
+/* IMPACT */
+.impact{background:var(--moss);color:#fff;padding:40px 0;}
+.impact-g{max-width:1000px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;}
+.istat .n{font-family:var(--serif);font-size:38px;font-weight:700;display:block;margin-bottom:4px;}
+.istat .l{font-size:12px;opacity:.75;font-family:monospace;letter-spacing:.5px;text-transform:uppercase;}
+
+/* HOME GRID */
+.hgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:48px 0;}
+.hcard{background:#fff;border:1px solid var(--paper3);border-radius:var(--rl);padding:24px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.hcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--mossl);transition:background .2s;}
+.hcard:hover{box-shadow:var(--shl);transform:translateY(-2px);}
+.hcard:hover::before{background:var(--mossmid);}
+.hci{font-size:28px;margin-bottom:14px;}
+.hcard h3{font-family:var(--serif);font-size:17px;margin-bottom:6px;}
+.hcard p{font-size:13px;color:var(--ink3);line-height:1.6;}
+.harr{position:absolute;bottom:20px;right:20px;color:var(--ink4);font-size:18px;transition:transform .2s;}
+.hcard:hover .harr{transform:translateX(3px);color:var(--mossmid);}
+
+/* SECTION */
+.shdr{padding:56px 0 32px;}
+.sey{font-family:monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mossmid);margin-bottom:12px;}
+.stit{font-family:var(--serif);font-size:clamp(28px,4vw,40px);line-height:1.2;letter-spacing:-.3px;margin-bottom:10px;}
+.ssub{font-size:14px;color:var(--ink3);max-width:520px;line-height:1.7;}
+.dvd{border:none;border-top:1px solid var(--paper3);margin:40px 0;}
+
+/* GUIDE */
+.galert{background:var(--redl);border:1px solid #E8BABA;border-radius:var(--rl);padding:16px 20px;display:flex;gap:14px;align-items:flex-start;margin-bottom:32px;}
+.galert-icon{font-size:20px;flex-shrink:0;margin-top:1px;}
+.galert p{font-size:13px;color:var(--red);line-height:1.6;}
+.galert strong{font-weight:600;display:block;margin-bottom:2px;}
+.gsteps{display:flex;flex-direction:column;margin-bottom:40px;}
+.gstep{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--paper3);}
+.gstep:last-child{border-bottom:none;}
+.snum{width:36px;height:36px;border-radius:50%;background:var(--mossp);border:2px solid var(--mossl);color:var(--moss);font-family:monospace;font-size:13px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.scon h4{font-family:var(--serif);font-size:18px;margin-bottom:6px;}
+.scon p{font-size:13.5px;color:var(--ink2);line-height:1.7;}
+.swarn{font-size:12.5px;color:var(--red);margin-top:8px;display:flex;align-items:center;gap:5px;}
+.stip{font-size:12.5px;color:var(--mossmid);margin-top:8px;background:var(--mossp);padding:7px 12px;border-radius:var(--r);display:inline-flex;align-items:center;gap:5px;}
+.aigrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px;}
+.aicard{background:#fff;border:1px solid var(--paper3);border-radius:var(--rl);padding:20px;}
+.aicard h4{font-size:14px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.aicard ul{list-style:none;}
+.aicard ul li{font-size:13px;color:var(--ink2);padding:5px 0 5px 16px;position:relative;border-bottom:1px solid var(--paper3);line-height:1.55;}
+.aicard ul li:last-child{border-bottom:none;}
+.aicard ul li::before{content:'→';position:absolute;left:0;color:var(--mossmid);}
+
+/* DIRECTORY */
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;}
+.dcard{background:#fff;border:1px solid var(--paper3);border-radius:var(--rl);padding:20px 22px;}
+.dtype{font-family:monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink4);margin-bottom:8px;}
+.dcard h4{font-family:var(--serif);font-size:16px;margin-bottom:6px;}
+.dcard p{font-size:12.5px;color:var(--ink3);line-height:1.6;margin-bottom:10px;}
+.dcts{display:flex;flex-direction:column;gap:4px;}
+.dct{font-size:12.5px;color:var(--ink2);display:flex;align-items:center;gap:6px;}
+.dct a{color:var(--mossmid);text-decoration:none;}
+.dct a:hover{text-decoration:underline;}
+.dbadge{font-size:10px;padding:2px 8px;border-radius:20px;font-family:monospace;}
+.bfree{background:var(--mossp);color:var(--moss);}
+.b24{background:var(--amberp);color:var(--amber);}
+
+
+/* DOCX rendered content */
+.docx-content{font-family:Georgia,'Times New Roman',serif;line-height:1.8;color:var(--ink1);font-size:15px;}
+.docx-content h1{font-size:1.6em;font-weight:700;margin:1.2em 0 .4em;}
+.docx-content h2{font-size:1.3em;font-weight:700;margin:1em 0 .3em;}
+.docx-content h3{font-size:1.1em;font-weight:600;margin:.8em 0 .2em;}
+.docx-content p{margin:.7em 0;}
+.docx-content strong,.docx-content b{font-weight:700;}
+.docx-content em,.docx-content i{font-style:italic;}
+.docx-content ul,.docx-content ol{padding-left:1.5em;margin:.5em 0;}
+.docx-content li{margin:.3em 0;}
+.docx-content table{width:100%;border-collapse:collapse;margin:1em 0;font-size:13px;}
+.docx-content td,.docx-content th{border:1px solid var(--border);padding:6px 10px;text-align:left;}
+.docx-content th{background:var(--surface2);font-weight:600;}
+
+/* DONATE */
+.donsec{background:var(--moss);border-radius:var(--rxl);padding:36px;color:#fff;margin-bottom:40px;}
+.donsec h3{font-family:var(--serif);font-size:26px;margin-bottom:8px;}
+.donsec > p{font-size:14px;opacity:.8;margin-bottom:24px;max-width:480px;line-height:1.65;}
+.dongrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.doncard{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--rl);padding:16px;}
+.doncard h5{font-size:14px;font-weight:500;margin-bottom:4px;}
+.doncard p{font-size:12px;opacity:.7;margin-bottom:12px;}
+.doncard button{background:#fff;color:var(--moss);border:none;padding:7px 16px;border-radius:var(--r);font-size:12px;font-weight:500;cursor:pointer;font-family:var(--sans);}
+
+/* BLOG */
+.fbio{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start;background:#fff;border:1px solid var(--paper3);border-radius:var(--rxl);padding:32px;margin-bottom:40px;}
+.favatar{width:90px;height:90px;border-radius:50%;background:var(--mossp);border:3px solid var(--mossl);display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0;}
+.fname{font-family:var(--serif);font-size:22px;margin-bottom:4px;}
+.frole{font-family:monospace;font-size:11px;color:var(--mossmid);letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;}
+.fbiotext{font-size:13.5px;color:var(--ink2);line-height:1.75;}
+.blist{display:flex;flex-direction:column;}
+.bpost{padding:28px 0;border-bottom:1px solid var(--paper3);}
+.bpost:last-child{border-bottom:none;}
+.bmeta{font-family:monospace;font-size:11px;color:var(--ink4);margin-bottom:8px;display:flex;gap:12px;align-items:center;}
+.bpost h3{font-family:var(--serif);font-size:20px;margin-bottom:8px;}
+.bpost p{font-size:13.5px;color:var(--ink2);line-height:1.7;}
+.btag{font-size:10px;padding:2px 10px;border-radius:20px;font-family:monospace;}
+
+/* EDITOR (shared) */
+.editor-box{display:none;border-radius:var(--rxl);padding:28px;margin-bottom:32px;border:1px solid #D4C4A0;background:var(--amberp);}
+.editor-box h4{font-family:var(--serif);font-size:18px;margin-bottom:18px;}
+.ef{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
+.ef label{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;font-family:monospace;}
+.ef input,.ef textarea,.ef select{font-family:var(--sans);font-size:13.5px;color:var(--ink);background:#fff;border:1px solid var(--paper3);border-radius:var(--r);padding:9px 12px;width:100%;}
+.ef input:focus,.ef textarea:focus{outline:none;border-color:var(--mossmid);}
+.ef textarea{min-height:140px;resize:vertical;}
+.eacts{display:flex;gap:8px;justify-content:flex-end;margin-top:6px;}
+
+/* COMMUNITY */
+.chero{background:var(--slate);color:#fff;border-radius:var(--rxl);padding:36px;margin-bottom:32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;}
+.chero h3{font-family:var(--serif);font-size:26px;margin-bottom:8px;}
+.chero > p{font-size:14px;opacity:.8;max-width:420px;line-height:1.65;}
+.tgbtn{background:#fff;color:var(--slate);padding:12px 24px;border-radius:var(--rl);font-size:13px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;flex-shrink:0;}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px;}
+.scard{background:#fff;border:1px solid var(--paper3);border-radius:var(--rl);overflow:hidden;}
+.simg{width:100%;height:130px;display:flex;align-items:center;justify-content:center;font-size:48px;background:var(--paper2);}
+.sbody{padding:16px;}
+.sauth{font-family:monospace;font-size:11px;color:var(--ink4);margin-bottom:6px;}
+.sbody p{font-size:13px;color:var(--ink2);line-height:1.6;}
+
+/* INITIATIVES */
+.icard{background:#fff;border:1px solid var(--paper3);border-radius:var(--rxl);padding:28px;margin-bottom:20px;}
+.ihead{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:16px;}
+.ihead h3{font-family:var(--serif);font-size:20px;margin-bottom:4px;}
+.sbadge{font-size:11px;padding:4px 12px;border-radius:20px;font-family:monospace;white-space:nowrap;flex-shrink:0;}
+.sact{background:var(--mossp);color:var(--moss);}
+.spln{background:var(--amberp);color:var(--amber);}
+.scmp{background:var(--slatep);color:var(--slate);}
+.imetrics{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+.imet{background:var(--paper2);border-radius:var(--r);padding:8px 14px;text-align:center;}
+.imet .v{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--moss);display:block;}
+.imet .k{font-size:11px;color:var(--ink3);font-family:monospace;}
+.idesc{font-size:13.5px;color:var(--ink2);line-height:1.7;margin-bottom:14px;}
+.prow{display:flex;gap:8px;flex-wrap:wrap;}
+.pthumb{width:72px;height:56px;border-radius:var(--r);background:var(--paper2);border:1px solid var(--paper3);display:flex;align-items:center;justify-content:center;font-size:22px;}
+
+/* ARTICLES */
+.acard{background:#fff;border:1px solid var(--paper3);border-radius:var(--rxl);padding:0;margin-bottom:28px;overflow:hidden;display:grid;grid-template-columns:100px 1fr;}
+.acover{background:var(--mossp);display:flex;align-items:center;justify-content:center;font-size:44px;min-height:160px;}
+.abody{padding:28px;}
+.ameta{font-family:monospace;font-size:11px;color:var(--ink4);margin-bottom:8px;}
+.atitle{font-family:var(--serif);font-size:22px;margin-bottom:6px;color:var(--ink);}
+.asub{font-size:13px;color:var(--mossmid);margin-bottom:14px;font-style:italic;}
+.atext{font-size:13.5px;color:var(--ink2);line-height:1.8;}
+.atext p{margin-bottom:12px;}
+.atext p:last-child{margin-bottom:0;}
+
+/* TOAST */
+.toast{display:none;position:fixed;bottom:24px;right:24px;background:var(--moss);color:#fff;padding:12px 20px;border-radius:var(--rl);font-size:13px;font-weight:500;z-index:9999;box-shadow:var(--shl);}
+.toast.on{display:block;}
+
+/* FOOTER */
+footer{background:var(--ink);color:#fff;padding:40px 0;margin-top:60px;}
+.fi{max-width:1000px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.flogo{font-family:var(--serif);font-size:16px;opacity:.9;}
+.flinks{display:flex;gap:20px;}
+.flinks a{font-size:12px;color:rgba(255,255,255,.5);text-decoration:none;cursor:pointer;}
+.flinks a:hover{color:#fff;}
+.fcopy{font-family:monospace;font-size:11px;opacity:.4;margin-top:16px;}
+
+@media(max-width:680px){
+  .hgrid,.aigrid,.dgrid,.sgrid,.dongrid{grid-template-columns:1fr;}
+  .impact-g{grid-template-columns:repeat(2,1fr);}
+  .chero,.fbio{grid-template-columns:1fr;}
+  .navls{display:none;}
+  .acard{grid-template-columns:1fr;}
+  .acover{min-height:80px;}
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+</head>
+<body>
+
+<!-- ADMIN BAR -->
+<div id="abar">
+  <span>⬡ Secret Friends</span>
+  <div id="abar-locked">
+    <button class="abtn" onclick="adminUnlock()">🔒 Admin</button>
+  </div>
+  <div id="abar-open" style="display:none">
+    <button class="abtn" onclick="toggleEditor()">✦ <span data-key="adm_write">Write journal entry</span></button>
+    <button class="abtn" onclick="toggleArtEditor()">✦ <span data-key="adm_art">New article</span></button>
+    <button class="abtn" onclick="adminLock()" style="opacity:.6">🔓 Lock</button>
+  </div>
+</div>
+
+<!-- LANG -->
+<div id="lbar">
+  <button class="lb on" onclick="setLang('en',this)">EN</button>
+  <button class="lb" onclick="setLang('ru',this)">RU</button>
+  <button class="lb" onclick="setLang('uz',this)">UZ</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="navi">
+    <div class="logo" onclick="goPage('home')"><div class="logo-mark">🐾</div><span data-key="org_short">Secret Friends</span></div>
+    <div class="navls">
+      <button class="nl on" onclick="goPage('home',this)" data-key="nav_home">Home</button>
+      <button class="nl" onclick="goPage('guide',this)" data-key="nav_guide">How to Help</button>
+      <button class="nl" onclick="goPage('dir',this)" data-key="nav_dir">Directory</button>
+      <button class="nl" onclick="goPage('blog',this)" data-key="nav_blog">Founder & Blog</button>
+      <button class="nl" onclick="goPage('comm',this)" data-key="nav_comm">Community</button>
+      <button class="nl" onclick="goPage('init',this)" data-key="nav_init">Initiatives</button>
+      <button class="nl" onclick="goPage('art',this)" data-key="nav_art">Articles</button>
+    </div>
+  </div>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<!-- ══ HOME ══ -->
+<div id="pg-home" class="pg on">
+ <div class="w">
+  <div class="hero">
+   <div class="eyebrow" data-key="hero_eye">School movement · Tashkent, Uzbekistan</div>
+   <h1><em data-key="hero_title_em">Secret Friends</em><br><span data-key="hero_title_of">of Animals</span></h1>
+   <p class="hero-sub" data-key="hero_sub">A student-led movement quietly working to make life better for stray animals.</p>
+   <div class="hacts">
+     <button class="bp" onclick="goPage('guide')">🐾 <span data-key="btn_help">Found an animal? Start here</span></button>
+     <button class="bs2" onclick="goPage('comm')" data-key="btn_join">Join the movement</button>
+   </div>
+   <div class="manifesto">
+     <p data-key="manifesto">"You don't have to save them all. You just have to see them — really see them — and do what you can, where you are, with what you have."</p>
+     <cite data-key="manifesto_cite">— Manifesto of Secret Friends of Animals</cite>
+   </div>
+  </div>
+ </div>
+ <div class="impact">
+  <div class="impact-g">
+   <div class="istat"><span class="n">350+</span><span class="l" data-key="stat1">Animals helped</span></div>
+   <div class="istat"><span class="n">3</span><span class="l" data-key="stat2">Winter shelters built</span></div>
+   
+   <div class="istat"><span class="n">3</span><span class="l" data-key="stat4">Languages spoken</span></div>
+  </div>
+ </div>
+ <div class="w">
+  <div class="hgrid">
+   <div class="hcard" onclick="goPage('guide')"><div class="hci">🆘</div><h3 data-key="c1h">How to help a stray</h3><p data-key="c1p">Step-by-step rescue guide, first aid, emergency contacts.</p><div class="harr">→</div></div>
+   <div class="hcard" onclick="goPage('dir')"><div class="hci">📍</div><h3 data-key="c2h">Clinics & shelters</h3><p data-key="c2p">Tashkent directory of vet clinics, shelters, donation options.</p><div class="harr">→</div></div>
+   <div class="hcard" onclick="goPage('blog')"><div class="hci">📓</div><h3 data-key="c3h">Clinic journal</h3><p data-key="c3p">Notes from veterinary internship — real cases, real outcomes.</p><div class="harr">→</div></div>
+   <div class="hcard" onclick="goPage('comm')"><div class="hci">🤝</div><h3 data-key="c4h">Community wall</h3><p data-key="c4p">Photos and stories from people who helped a stray this week.</p><div class="harr">→</div></div>
+   <div class="hcard" onclick="goPage('init')"><div class="hci">🏗️</div><h3 data-key="c5h">Our initiatives</h3><p data-key="c5p">Winter shelters, school newspaper, expansion plans.</p><div class="harr">→</div></div>
+   <div class="hcard" onclick="goPage('art')"><div class="hci">✍️</div><h3 data-key="c6h">Articles</h3><p data-key="c6p">Essays and reflections by the founder on animal welfare.</p><div class="harr">→</div></div>
+  </div>
+ </div>
+</div>
+
+<!-- ══ GUIDE ══ -->
+<div id="pg-guide" class="pg">
+ <div class="w">
+  <div class="shdr">
+   <div class="sey" data-key="guide_eye">Rescue guide</div>
+   <h2 class="stit" data-key="guide_title">Found an animal. What now?</h2>
+   <p class="ssub" data-key="guide_sub">Follow these steps in order. Staying calm is the most important thing.</p>
+  </div>
+  <div class="galert"><div class="galert-icon">⚠️</div><div><p><strong data-key="gwh">When to call a professional immediately</strong><span data-key="gwb"> — Foaming at the mouth, circling, unprovoked aggression, or paralysis. Do not approach.</span></p></div></div>
+  <div class="gsteps" id="guide-steps"></div>
+  <hr class="dvd"/>
+  <div class="sey" data-key="aid_eye">First aid reference</div>
+  <h3 style="font-family:var(--serif);font-size:22px;margin-bottom:20px" data-key="aid_title">While you wait for the vet</h3>
+  <div class="aigrid">
+   <div class="aicard"><h4>💔 <span data-key="aid_shock">Shock</span></h4><ul><li data-key="sh1">Wrap loosely in fleece — warmth first</li><li data-key="sh2">Minimum handling — one move to quiet space</li><li data-key="sh3">No food, no water — vet handles fluids</li><li data-key="sh4">Monitor breathing every 2 minutes</li></ul></div>
+   <div class="aicard"><h4>🩸 <span data-key="aid_wound">Open wound</span></h4><ul><li data-key="wo1">Firm pressure with clean cloth 8–10 min</li><li data-key="wo2">Saline or clean water only — no alcohol</li><li data-key="wo3">Do not remove embedded objects</li><li data-key="wo4">All bite wounds → vet, always</li></ul></div>
+   <div class="aicard"><h4>🌡️ <span data-key="aid_heat">Heatstroke</span></h4><ul><li data-key="ht1">Move to shade or AC immediately</li><li data-key="ht2">Cool water on paws, armpits, neck — not ice</li><li data-key="ht3">No wet towel covers — use airflow</li><li data-key="ht4">Vet within 30 min even if recovered</li></ul></div>
+   <div class="aicard"><h4>💧 <span data-key="aid_dehy">Dehydration</span></h4><ul><li data-key="dh1">Pinch neck skin — slow return = dehydrated</li><li data-key="dh2">Small sips frequently, not a full bowl</li><li data-key="dh3">Wet food better than dry</li><li data-key="dh4">Sunken eyes or sticky gums → IV fluids</li></ul></div>
+  </div>
+ </div>
+</div>
+
+<!-- ══ DIRECTORY ══ -->
+<div id="pg-dir" class="pg">
+ <div class="w">
+  <div class="shdr">
+   <div class="sey" data-key="dir_eye">Tashkent directory</div>
+   <h2 class="stit" data-key="dir_title">Clinics, shelters & contacts</h2>
+   <p class="ssub" data-key="dir_sub">Always call ahead before bringing an animal.</p>
+  </div>
+  <div class="dgrid" id="dir-grid"></div>
+  </div>
+</div>
+
+<!-- ══ BLOG ══ -->
+<div id="pg-blog" class="pg">
+ <div class="w">
+  <div class="shdr">
+   <div class="sey" data-key="blog_eye">Founder & clinic journal</div>
+   <h2 class="stit" data-key="blog_title">Behind the movement</h2>
+  </div>
+  <div class="fbio">
+   <div class="favatar">🌿</div>
+   <div>
+    <div class="fname" data-key="f_name">Fatima</div>
+    <div class="frole" data-key="f_role">Founder · Secret Friends of Animals</div>
+    <p class="fbiotext" data-key="f_bio">I'm Fatima, an 11th-grade student at School #278 in Tashkent. I dream of becoming a veterinarian. I've volunteered at a local veterinary clinic and I'm currently a volunteer at the Tashkent Zoo. I started Secret Friends of Animals because I kept noticing animals that everyone else walked past — and I decided to stop walking past.</p>
+   </div>
+  </div>
+  <div class="editor-box" id="beditor">
+   <h4 data-key="ed_h">New journal entry</h4>
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div class="ef"><label data-key="ed_tl">Post title</label><input id="ed-title" type="text" placeholder="e.g. The cat with three injuries"/></div>
+    <div class="ef"><label data-key="ed_tg">Tag</label>
+     <select id="ed-tag">
+      <option value="clinic">Clinic journal</option>
+      <option value="rescue">Rescue story</option>
+      <option value="tips">Tips</option>
+      <option value="update">Movement update</option>
+     </select>
+    </div>
+   </div>
+   <div class="ef" style="border:2px dashed var(--moss);border-radius:var(--rl);padding:18px;background:var(--surface2);text-align:center;cursor:pointer" onclick="document.getElementById('blog-docx-input').click()" id="blog-drop-zone">
+     <div style="font-size:28px;margin-bottom:8px">📄</div>
+     <div style="font-weight:600;color:var(--ink1);margin-bottom:4px" data-key="blog_upload_label">Upload Word file (.docx)</div>
+     <div style="font-size:12px;color:var(--ink3)" data-key="blog_upload_hint">Click to browse — formatting is preserved automatically</div>
+     <input id="blog-docx-input" type="file" accept=".docx" style="display:none" onchange="loadDocxBlog(this)"/>
+   </div>
+   <div class="ef" id="blog-preview-wrap" style="display:none">
+     <label>Preview</label>
+     <div id="blog-preview" style="border:1px solid var(--border);border-radius:var(--rl);padding:20px;background:var(--surface);font-family:Georgia,serif;line-height:1.7;min-height:80px;max-height:340px;overflow-y:auto"></div>
+     <button type="button" onclick="clearBlogDoc()" style="margin-top:8px;background:none;border:none;color:var(--ink3);font-size:12px;cursor:pointer;padding:0">✕ Remove file</button>
+   </div>
+   <div class="ef" id="blog-manual-wrap">
+     <label data-key="ed_photo">Photo (paste image URL or leave blank)</label><input id="ed-photo" type="text" placeholder="https://i.imgur.com/yourphoto.jpg"/>
+     <label data-key="ed_bd" style="margin-top:12px;display:block">Or type your entry</label><textarea id="ed-body" placeholder="Write your journal entry here..."></textarea>
+   </div>
+   <div class="eacts">
+    <button class="bs2" onclick="document.getElementById('beditor').style.display='none'" data-key="ed_cancel">Cancel</button>
+    <button class="bp" onclick="publishPost()">✓ <span data-key="ed_pub">Publish entry</span></button>
+   </div>
+  </div>
+  <div class="blist" id="blog-list"></div>
+ </div>
+</div>
+
+<!-- ══ COMMUNITY ══ -->
+<div id="pg-comm" class="pg">
+ <div class="w">
+  <div class="shdr">
+   <div class="sey" data-key="comm_eye">Community wall</div>
+   <h2 class="stit" data-key="comm_title">Stories from the field</h2>
+   <p class="ssub" data-key="comm_sub">Real people, real acts of kindness. Share your story.</p>
+  </div>
+  <div class="chero">
+   <div>
+    <h3 data-key="cc_h">Did you help a stray this week?</h3>
+    <p data-key="cc_p">Send your photo and a few words to our Telegram. We'll add your story to the wall. No account needed.</p>
+   </div>
+   <a class="tgbtn" href="https://t.me/+is8_h19JGpoyZWMy" target="_blank">✈ <span data-key="cc_btn">Share on Telegram</span></a>
+  </div>
+  <div class="sgrid" id="stories-grid"></div>
+ </div>
+</div>
+
+<!-- ══ INITIATIVES ══ -->
+<div id="pg-init" class="pg">
+ <div class="w">
+  <div class="shdr">
+   <div class="sey" data-key="init_eye">Our work</div>
+   <h2 class="stit" data-key="init_title">Documented initiatives</h2>
+   <p class="ssub" data-key="init_sub">Every project tracked, measured, and open for anyone to see.</p>
+  </div>
+  <div id="init-list"></div>
+ </div>
+</div>
+
+<!-- ══ ARTICLES ══ -->
+<div id="pg-art" class="pg">
+ <div class="w">
+  <div class="shdr">
+   <div class="sey" data-key="art_eye">Articles by the founder</div>
+   <h2 class="stit" data-key="art_title">Writing</h2>
+   <p class="ssub" data-key="art_sub">Essays, reflections, and longer reads on animal welfare, rescue, and what it means to build a movement as a student.</p>
+  </div>
+  <div class="editor-box" id="art-editor">
+   <h4 data-key="art_new_h">New article</h4>
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div class="ef"><label data-key="art_tl">Title</label><input id="art-title" type="text" placeholder="e.g. Why every city needs stray animal advocates"/></div>
+    <div class="ef"><label data-key="art_cv">Cover (emoji)</label><input id="art-cover" type="text" placeholder="🌍" style="max-width:100px"/></div>
+   </div>
+   <div class="ef"><label data-key="art_st">Subtitle (optional)</label><input id="art-sub" type="text" placeholder="A brief framing sentence"/></div>
+   <div class="ef" style="border:2px dashed var(--moss);border-radius:var(--rl);padding:18px;background:var(--surface2);text-align:center;cursor:pointer" onclick="document.getElementById('art-docx-input').click()" id="art-drop-zone">
+     <div style="font-size:28px;margin-bottom:8px">📄</div>
+     <div style="font-weight:600;color:var(--ink1);margin-bottom:4px">Upload Word file (.docx)</div>
+     <div style="font-size:12px;color:var(--ink3)">Click to browse — formatting preserved automatically</div>
+     <input id="art-docx-input" type="file" accept=".docx" style="display:none" onchange="loadDocxArticle(this)"/>
+   </div>
+   <div class="ef" id="art-preview-wrap" style="display:none">
+     <label>Preview</label>
+     <div id="art-preview" style="border:1px solid var(--border);border-radius:var(--rl);padding:20px;background:var(--surface);font-family:Georgia,serif;line-height:1.7;min-height:80px;max-height:420px;overflow-y:auto"></div>
+     <button type="button" onclick="clearArticleDoc()" style="margin-top:8px;background:none;border:none;color:var(--ink3);font-size:12px;cursor:pointer;padding:0">✕ Remove file and type manually</button>
+   </div>
+   <div class="ef" id="art-manual-wrap">
+     <label data-key="art_photo">Photo (paste image URL or leave blank)</label><input id="art-photo" type="text" placeholder="https://i.imgur.com/yourphoto.jpg"/>
+     <label data-key="art_bd" style="margin-top:12px;display:block">Or write your article here</label><textarea id="art-body" placeholder="Write your article here. Use double line breaks for paragraphs." style="min-height:160px"></textarea>
+   </div>
+   <div class="eacts">
+    <button class="bs2" onclick="document.getElementById('art-editor').style.display='none'" data-key="art_cancel">Cancel</button>
+    <button class="bp" onclick="publishArticle()">✓ <span data-key="art_pub">Publish article</span></button>
+   </div>
+  </div>
+  <div id="art-list"></div>
+ </div>
+</div>
+
+<footer>
+ <div class="fi">
+  <div>
+   <div class="flogo">🐾 Secret Friends of Animals</div>
+   <div class="fcopy" data-key="f_copy">Tashkent, Uzbekistan · Student movement · All care, no profit</div>
+  </div>
+  <div class="flinks">
+   <a onclick="goPage('guide')" data-key="nav_guide">How to Help</a>
+   <a onclick="goPage('dir')" data-key="nav_dir">Directory</a>
+   <a onclick="goPage('art')" data-key="nav_art">Articles</a>
+   <a href="https://t.me/+is8_h19JGpoyZWMy" target="_blank">Telegram</a>
+  </div>
+ </div>
+</footer>
+
+<script>
+var T = {
+en:{
+  org_short:"Secret Friends",hero_eye:"School movement · Tashkent, Uzbekistan",
+  hero_title_em:"Secret Friends",hero_title_of:"of Animals",
+  hero_sub:"A student-led movement quietly working to make life better for stray animals — through rescue guidance, local resources, and a growing community of young people who care.",
+  manifesto:"\u201cYou don\u2019t have to save them all. You just have to see them \u2014 really see them \u2014 and do what you can, where you are, with what you have.\u201d",
+  manifesto_cite:"\u2014 Manifesto of Secret Friends of Animals",
+  btn_help:"Found an animal? Start here",btn_join:"Join the movement",
+  stat1:"Animals helped",stat2:"Winter shelters built",stat4:"Languages spoken",
+  c1h:"How to help a stray",c1p:"Step-by-step rescue guide, first aid, emergency contacts.",
+  c2h:"Clinics & shelters",c2p:"Tashkent directory of vet clinics, shelters, donation options.",
+  c3h:"Clinic journal",c3p:"Notes from veterinary internship \u2014 real cases, real outcomes.",
+  c4h:"Community wall",c4p:"Photos and stories from people who helped a stray this week.",
+  c5h:"Our initiatives",c5p:"Winter shelters, school newspaper, expansion plans.",
+  c6h:"Articles",c6p:"Essays and reflections written by the founder on animal welfare.",
+  nav_home:"Home",nav_guide:"How to Help",nav_dir:"Directory",nav_blog:"Founder & Blog",
+  nav_comm:"Community",nav_init:"Initiatives",nav_art:"Articles",
+  adm_write:"Write journal entry",adm_art:"New article",
+  guide_eye:"Rescue guide",guide_title:"Found an animal. What now?",
+  guide_sub:"Follow these steps in order. Staying calm is the most important thing.",
+  gwh:"When to call a professional immediately",
+  gwb:" \u2014 Foaming at the mouth, circling, unprovoked aggression, or paralysis. Do not approach. Call animal control.",
+  aid_eye:"First aid reference",aid_title:"While you wait for the vet",
+  aid_shock:"Shock",aid_wound:"Open wound",aid_heat:"Heatstroke",aid_dehy:"Dehydration",
+  sh1:"Wrap loosely in fleece \u2014 warmth first",sh2:"Minimum handling \u2014 one move to quiet space",
+  sh3:"No food, no water \u2014 vet handles fluids",sh4:"Monitor breathing every 2 minutes",
+  wo1:"Firm pressure with clean cloth 8\u201310 min",wo2:"Saline or clean water only \u2014 no alcohol",
+  wo3:"Do not remove embedded objects",wo4:"All bite wounds \u2192 vet, always",
+  ht1:"Move to shade or AC immediately",ht2:"Cool water on paws, armpits, neck \u2014 not ice",
+  ht3:"No wet towel covers \u2014 use airflow",ht4:"Vet within 30 min even if recovered",
+  dh1:"Pinch neck skin \u2014 slow return = dehydrated",dh2:"Small sips frequently, not a full bowl",
+  dh3:"Wet food better than dry",dh4:"Sunken eyes or sticky gums \u2192 IV fluids",
+  dir_eye:"Tashkent directory",dir_title:"Clinics, shelters & contacts",
+  dir_sub:"Always call ahead before bringing an animal.",
+  don_title:"Support the cause",don_sub:"Every contribution goes directly to animal care, shelter materials, or clinic fees.",
+  d1h:"Feed for a week",d1p:"Food for one stray for 7 days at our partner shelter.",
+  d2h:"Vet visit",d2p:"Basic exam and first treatment for an injured stray.",
+  d3h:"Winter shelter kit",d3p:"Materials for one insulated shelter for 2\u20133 cats.",
+  blog_eye:"Founder & clinic journal",blog_title:"Behind the movement",
+  f_name:"Fatima",f_role:"Founder \u00b7 Secret Friends of Animals",
+  f_bio:"I\u2019m Fatima, an 11th-grade student at School #278 in Tashkent. I dream of becoming a veterinarian. I\u2019ve volunteered at a local vet clinic and I\u2019m currently a volunteer at the Tashkent Zoo. I started Secret Friends of Animals because I kept noticing animals that everyone else walked past \u2014 and decided to stop walking past.",
+  ed_h:"New journal entry",ed_tl:"Post title",ed_tg:"Tag",ed_bd:"Entry",ed_cancel:"Cancel",ed_pub:"Publish entry",ed_photo:"Photo (paste URL or leave blank)",art_photo:"Photo (paste URL or leave blank)",
+  comm_eye:"Community wall",comm_title:"Stories from the field",
+  comm_sub:"Real people, real acts of kindness. Share your story.",
+  cc_h:"Did you help a stray this week?",
+  cc_p:"Send your photo and a few words to our Telegram. We\u2019ll add your story to the wall. No account needed.",
+  cc_btn:"Share on Telegram",
+  init_eye:"Our work",init_title:"Documented initiatives",
+  init_sub:"Every project tracked, measured, and open for anyone to see.",
+  art_eye:"Articles by the founder",art_title:"Writing",
+  art_sub:"Essays, reflections, and longer reads on animal welfare, rescue, and what it means to build a movement as a student.",
+  art_new_h:"New article",art_tl:"Title",art_st:"Subtitle (optional)",art_cv:"Cover (emoji or symbol)",
+  art_bd:"Article body",art_cancel:"Cancel",art_pub:"Publish article",
+  art_empty:"No articles yet. Use the admin button above to publish your first piece.",
+  f_copy:"Tashkent, Uzbekistan \u00b7 Student movement \u00b7 All care, no profit",
+  badge_free:"Free intake",badge_24h:"24h"
+},
+ru:{
+  org_short:"\u0422\u0430\u0439\u043d\u044b\u0435 \u0414\u0440\u0443\u0437\u044c\u044f",hero_eye:"\u0428\u043a\u043e\u043b\u044c\u043d\u043e\u0435 \u0434\u0432\u0438\u0436\u0435\u043d\u0438\u0435 \u00b7 \u0422\u0430\u0448\u043a\u0435\u043d\u0442, \u0423\u0437\u0431\u0435\u043a\u0438\u0441\u0442\u0430\u043d",
+  hero_title_em:"\u0422\u0430\u0439\u043d\u044b\u0435 \u0414\u0440\u0443\u0437\u044c\u044f",hero_title_of:"\u0436\u0438\u0432\u043e\u0442\u043d\u044b\u0445",
+  hero_sub:"\u0421\u0442\u0443\u0434\u0435\u043d\u0447\u0435\u0441\u043a\u043e\u0435 \u0434\u0432\u0438\u0436\u0435\u043d\u0438\u0435, \u043a\u043e\u0442\u043e\u0440\u043e\u0435 \u0442\u0438\u0445\u043e \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u043d\u0430\u0434 \u0442\u0435\u043c, \u0447\u0442\u043e\u0431\u044b \u0441\u0434\u0435\u043b\u0430\u0442\u044c \u0436\u0438\u0437\u043d\u044c \u0431\u0435\u0437\u0434\u043e\u043c\u043d\u044b\u0445 \u0436\u0438\u0432\u043e\u0442\u043d\u044b\u0445 \u043b\u0443\u0447\u0448\u0435.",
+  manifesto:"\u00ab\u041d\u0435 \u043d\u0443\u0436\u043d\u043e \u0441\u043f\u0430\u0441\u0430\u0442\u044c \u0432\u0441\u0435\u0445. \u041d\u0443\u0436\u043d\u043e \u043f\u0440\u043e\u0441\u0442\u043e \u0443\u0432\u0438\u0434\u0435\u0442\u044c \u2014 \u043f\u043e-\u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0435\u043c\u0443 \u0443\u0432\u0438\u0434\u0435\u0442\u044c \u2014 \u0438 \u0441\u0434\u0435\u043b\u0430\u0442\u044c \u0447\u0442\u043e \u043c\u043e\u0436\u0435\u0448\u044c, \u0442\u0430\u043c \u0433\u0434\u0435 \u0442\u044b, \u0441 \u0442\u0435\u043c \u0447\u0442\u043e \u0435\u0441\u0442\u044c.\u00bb",
+  manifesto_cite:"\u2014 \u041c\u0430\u043d\u0438\u0444\u0435\u0441\u0442 \u0422\u0430\u0439\u043d\u044b\u0445 \u0414\u0440\u0443\u0437\u0435\u0439 \u0416\u0438\u0432\u043e\u0442\u043d\u044b\u0445",
+  btn_help:"\u041d\u0430\u0448\u043b\u0438 \u0436\u0438\u0432\u043e\u0442\u043d\u043e\u0435? \u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u0437\u0434\u0435\u0441\u044c",btn_join:"\u041f\u0440\u0438\u0441\u043e\u0435\u0434\u0438\u043d\u0438\u0442\u044c\u0441\u044f",
+  stat1:"\u0416\u0438\u0432\u043e\u0442\u043d\u044b\u0445 \u043f\u043e\u043b\u0443\u0447\u0438\u043b\u0438 \u043f\u043e\u043c\u043e\u0449\u044c",stat2:"\u0417\u0438\u043c\u043d\u0438\u0445 \u0443\u043a\u0440\u044b\u0442\u0438\u0439 \u043f\u043e\u0441\u0442\u0440\u043e\u0435\u043d\u043e",stat4:"\u042f\u0437\u044b\u043a\u0430 \u0432 \u0434\u0432\u0438\u0436\u0435\u043d\u0438\u0438",
+  c1h:"\u041a\u0430\u043a \u043f\u043e\u043c\u043e\u0447\u044c \u0431\u0435\u0437\u0434\u043e\u043c\u043d\u043e\u043c\u0443",c1p:"\u041f\u043e\u0448\u0430\u0433\u043e\u0432\u044b\u0439 \u0433\u0430\u0439\u0434 \u043f\u043e \u0441\u043f\u0430\u0441\u0435\u043d\u0438\u044e, \u043f\u0435\u0440\u0432\u0430\u044f \u043f\u043e\u043c\u043e\u0449\u044c, \u044d\u043a\u0441\u0442\u0440\u0435\u043d\u043d\u044b\u0435 \u043a\u043e\u043d\u0442\u0430\u043a\u0442\u044b.",
+  c2h:"\u041a\u043b\u0438\u043d\u0438\u043a\u0438 \u0438 \u043f\u0440\u0438\u044e\u0442\u044b",c2p:"\u0421\u043f\u0440\u0430\u0432\u043e\u0447\u043d\u0438\u043a \u0432\u0435\u0442\u043a\u043b\u0438\u043d\u0438\u043a \u0438 \u043f\u0440\u0438\u044e\u0442\u043e\u0432 \u0422\u0430\u0448\u043a\u0435\u043d\u0442\u0430.",
+  c3h:"\u041a\u043b\u0438\u043d\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0436\u0443\u0440\u043d\u0430\u043b",c3p:"\u0417\u0430\u043c\u0435\u0442\u043a\u0438 \u0441\u043e \u0441\u0442\u0430\u0436\u0438\u0440\u043e\u0432\u043a\u0438 \u2014 \u0440\u0435\u0430\u043b\u044c\u043d\u044b\u0435 \u0441\u043b\u0443\u0447\u0430\u0438.",
+  c4h:"\u0421\u0442\u0435\u043d\u0430 \u0441\u043e\u043e\u0431\u0449\u0435\u0441\u0442\u0432\u0430",c4p:"\u0424\u043e\u0442\u043e \u0438 \u0438\u0441\u0442\u043e\u0440\u0438\u0438 \u043b\u044e\u0434\u0435\u0439, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043f\u043e\u043c\u043e\u0433\u043b\u0438.",
+  c5h:"\u041d\u0430\u0448\u0438 \u0438\u043d\u0438\u0446\u0438\u0430\u0442\u0438\u0432\u044b",c5p:"\u0417\u0438\u043c\u043d\u0438\u0435 \u0443\u043a\u0440\u044b\u0442\u0438\u044f, \u0448\u043a\u043e\u043b\u044c\u043d\u0430\u044f \u0433\u0430\u0437\u0435\u0442\u0430, \u043f\u043b\u0430\u043d\u044b \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043d\u0438\u044f.",
+  c6h:"\u0421\u0442\u0430\u0442\u044c\u0438",c6p:"\u042d\u0441\u0441\u0435 \u0438 \u0440\u0430\u0437\u043c\u044b\u0448\u043b\u0435\u043d\u0438\u044f \u043e\u0441\u043d\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u043d\u0438\u0446\u044b \u043e \u0437\u0430\u0449\u0438\u0442\u0435 \u0436\u0438\u0432\u043e\u0442\u043d\u044b\u0445.",
+  nav_home:"\u0413\u043b\u0430\u0432\u043d\u0430\u044f",nav_guide:"\u041a\u0430\u043a \u043f\u043e\u043c\u043e\u0447\u044c",nav_dir:"\u0421\u043f\u0440\u0430\u0432\u043e\u0447\u043d\u0438\u043a",nav_blog:"\u041e\u0441\u043d\u043e\u0432\u0430\u0442\u0435\u043b\u044c \u0438 \u0411\u043b\u043e\u0433",
+  nav_comm:"\u0421\u043e\u043e\u0431\u0449\u0435\u0441\u0442\u0432\u043e",nav_init:"\u0418\u043d\u0438\u0446\u0438\u0430\u0442\u0438\u0432\u044b",nav_art:"\u0421\u0442\u0430\u0442\u044c\u0438",
+  adm_write:"\u041d\u0430\u043f\u0438\u0441\u0430\u0442\u044c \u0437\u0430\u043f\u0438\u0441\u044c",adm_art:"\u041d\u043e\u0432\u0430\u044f \u0441\u0442\u0430\u0442\u044c\u044f",
+  guide_eye:"\u0413\u0430\u0439\u0434 \u043f\u043e \u0441\u043f\u0430\u0441\u0435\u043d\u0438\u044e",guide_title:"\u041d\u0430\u0448\u043b\u0438 \u0436\u0438\u0432\u043e\u0442\u043d\u043e\u0435. \u0427\u0442\u043e \u0434\u0435\u043b\u0430\u0442\u044c?",
+  guide_sub:"\u0421\u043b\u0435\u0434\u0443\u0439\u0442\u0435 \u044d\u0442\u0438\u043c \u0448\u0430\u0433\u0430\u043c \u043f\u043e \u043f\u043e\u0440\u044f\u0434\u043a\u0443. \u0421\u043e\u0445\u0440\u0430\u043d\u044f\u0442\u044c \u0441\u043f\u043e\u043a\u043e\u0439\u0441\u0442\u0432\u0438\u0435 \u2014 \u0441\u0430\u043c\u043e\u0435 \u0432\u0430\u0436\u043d\u043e\u0435.",
+  gwh:"\u041a\u043e\u0433\u0434\u0430 \u043d\u0435\u043c\u0435\u0434\u043b\u0435\u043d\u043d\u043e \u0437\u0432\u043e\u043d\u0438\u0442\u044c \u0441\u043f\u0435\u0446\u0438\u0430\u043b\u0438\u0441\u0442\u0443",
+  gwb:" \u2014 \u041f\u0435\u043d\u0430 \u0438\u0437\u043e \u0440\u0442\u0430, \u043a\u0440\u0443\u0436\u0435\u043d\u0438\u0435, \u0430\u0433\u0440\u0435\u0441\u0441\u0438\u044f, \u043f\u0430\u0440\u0430\u043b\u0438\u0447. \u041d\u0435 \u043f\u043e\u0434\u0445\u043e\u0434\u0438\u0442\u0435.",
+  aid_eye:"\u0421\u043f\u0440\u0430\u0432\u043e\u0447\u043d\u0438\u043a \u043f\u0435\u0440\u0432\u043e\u0439 \u043f\u043e\u043c\u043e\u0449\u0438",aid_title:"\u041f\u043e\u043a\u0430 \u0435\u0434\u0435\u0442 \u0432\u0435\u0442\u0435\u0440\u0438\u043d\u0430\u0440",
+  aid_shock:"\u0428\u043e\u043a",aid_wound:"\u041e\u0442\u043a\u0440\u044b\u0442\u0430\u044f \u0440\u0430\u043d\u0430",aid_heat:"\u0422\u0435\u043f\u043b\u043e\u0432\u043e\u0439 \u0443\u0434\u0430\u0440",aid_dehy:"\u041e\u0431\u0435\u0437\u0432\u043e\u0436\u0438\u0432\u0430\u043d\u0438\u0435",
+  sh1:"\u041d\u0435\u043f\u043b\u043e\u0442\u043d\u043e \u0437\u0430\u0432\u0435\u0440\u043d\u0443\u0442\u044c \u0432\u043e \u0444\u043b\u0438\u0441 \u2014 \u0441\u043d\u0430\u0447\u0430\u043b\u0430 \u0442\u0435\u043f\u043b\u043e",sh2:"\u041c\u0438\u043d\u0438\u043c\u0443\u043c \u043f\u0440\u0438\u043a\u043e\u0441\u043d\u043e\u0432\u0435\u043d\u0438\u0439",
+  sh3:"\u041d\u0438 \u0435\u0434\u044b, \u043d\u0438 \u0432\u043e\u0434\u044b \u2014 \u0432\u0435\u0442 \u0432\u0432\u0435\u0434\u0451\u0442 \u0436\u0438\u0434\u043a\u043e\u0441\u0442\u0438",sh4:"\u0421\u043b\u0435\u0434\u0438\u0442\u044c \u0437\u0430 \u0434\u044b\u0445\u0430\u043d\u0438\u0435\u043c \u043a\u0430\u0436\u0434\u044b\u0435 2 \u043c\u0438\u043d\u0443\u0442\u044b",
+  wo1:"\u0414\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0447\u0438\u0441\u0442\u043e\u0439 \u0442\u043a\u0430\u043d\u044c\u044e 8\u201310 \u043c\u0438\u043d",wo2:"\u0422\u043e\u043b\u044c\u043a\u043e \u0444\u0438\u0437\u0440\u0430\u0441\u0442\u0432\u043e\u0440 \u0438\u043b\u0438 \u0447\u0438\u0441\u0442\u0430\u044f \u0432\u043e\u0434\u0430",
+  wo3:"\u041d\u0435 \u0438\u0437\u0432\u043b\u0435\u043a\u0430\u0442\u044c \u0437\u0430\u0441\u0442\u0440\u044f\u0432\u0448\u0438\u0435 \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u044b",wo4:"\u0412\u0441\u0435 \u0443\u043a\u0443\u0441\u044b \u2192 \u0432\u0435\u0442\u0435\u0440\u0438\u043d\u0430\u0440, \u0432\u0441\u0435\u0433\u0434\u0430",
+  ht1:"\u041d\u0435\u043c\u0435\u0434\u043b\u0435\u043d\u043d\u043e \u0432 \u0442\u0435\u043d\u044c \u0438\u043b\u0438 \u043a\u043e\u043d\u0434\u0438\u0446\u0438\u043e\u043d\u0435\u0440",ht2:"\u041f\u0440\u043e\u0445\u043b\u0430\u0434\u043d\u0430\u044f \u0432\u043e\u0434\u0430 \u043d\u0430 \u043b\u0430\u043f\u044b, \u043f\u043e\u0434\u043c\u044b\u0448\u043a\u0438, \u0448\u0435\u044e \u2014 \u043d\u0435 \u043b\u0451\u0434",
+  ht3:"\u041d\u0435 \u043d\u0430\u043a\u0440\u044b\u0432\u0430\u0442\u044c \u043c\u043e\u043a\u0440\u044b\u043c \u043f\u043e\u043b\u043e\u0442\u0435\u043d\u0446\u0435\u043c",ht4:"\u0412\u0435\u0442\u0435\u0440\u0438\u043d\u0430\u0440 \u0432 \u0442\u0435\u0447\u0435\u043d\u0438\u0435 30 \u043c\u0438\u043d",
+  dh1:"\u0429\u0438\u043f\u043e\u043a \u043a\u043e\u0436\u0438 \u043d\u0430 \u0448\u0435\u0435 \u2014 \u043c\u0435\u0434\u043b\u0435\u043d\u043d\u044b\u0439 \u0432\u043e\u0437\u0432\u0440\u0430\u0442 = \u043e\u0431\u0435\u0437\u0432\u043e\u0436\u0438\u0432\u0430\u043d\u0438\u0435",
+  dh2:"\u041c\u0430\u043b\u0435\u043d\u044c\u043a\u0438\u043c\u0438 \u0433\u043b\u043e\u0442\u043a\u0430\u043c\u0438 \u0447\u0430\u0441\u0442\u043e",dh3:"\u0412\u043b\u0430\u0436\u043d\u044b\u0439 \u043a\u043e\u0440\u043c \u043b\u0443\u0447\u0448\u0435 \u0441\u0443\u0445\u043e\u0433\u043e",
+  dh4:"\u0412\u043f\u0430\u0432\u0448\u0438\u0435 \u0433\u043b\u0430\u0437\u0430 \u0438\u043b\u0438 \u043b\u0438\u043f\u043a\u0438\u0435 \u0434\u0451\u0441\u043d\u044b \u2192 \u043a\u0430\u043f\u0435\u043b\u044c\u043d\u0438\u0446\u0430",
+  dir_eye:"\u0421\u043f\u0440\u0430\u0432\u043e\u0447\u043d\u0438\u043a \u0422\u0430\u0448\u043a\u0435\u043d\u0442\u0430",dir_title:"\u041a\u043b\u0438\u043d\u0438\u043a\u0438, \u043f\u0440\u0438\u044e\u0442\u044b \u0438 \u043a\u043e\u043d\u0442\u0430\u043a\u0442\u044b",
+  dir_sub:"\u0412\u0441\u0435\u0433\u0434\u0430 \u0437\u0432\u043e\u043d\u0438\u0442\u0435 \u0437\u0430\u0440\u0430\u043d\u0435\u0435 \u043f\u0435\u0440\u0435\u0434 \u0442\u0435\u043c \u043a\u0430\u043a \u043f\u0440\u0438\u0432\u0435\u0437\u0442\u0438 \u0436\u0438\u0432\u043e\u0442\u043d\u043e\u0435.",
+  don_title:"\u041f\u043e\u0434\u0434\u0435\u0440\u0436\u0438\u0442\u0435 \u0434\u0432\u0438\u0436\u0435\u043d\u0438\u0435",don_sub:"\u041a\u0430\u0436\u0434\u044b\u0439 \u0432\u043a\u043b\u0430\u0434 \u0438\u0434\u0451\u0442 \u043d\u0430\u043f\u0440\u044f\u043c\u0443\u044e \u043d\u0430 \u0443\u0445\u043e\u0434 \u0437\u0430 \u0436\u0438\u0432\u043e\u0442\u043d\u044b\u043c\u0438.",
+  d1h:"\u0415\u0434\u0430 \u043d\u0430 \u043d\u0435\u0434\u0435\u043b\u044e",d1p:"\u041f\u0438\u0442\u0430\u043d\u0438\u0435 \u043e\u0434\u043d\u043e\u0433\u043e \u0431\u0435\u0437\u0434\u043e\u043c\u043d\u043e\u0433\u043e \u0436\u0438\u0432\u043e\u0442\u043d\u043e\u0433\u043e \u043d\u0430 7 \u0434\u043d\u0435\u0439.",
+  d2h:"\u0412\u0438\u0437\u0438\u0442 \u0432\u0435\u0442\u0435\u0440\u0438\u043d\u0430\u0440\u0430",d2p:"\u0411\u0430\u0437\u043e\u0432\u044b\u0439 \u043e\u0441\u043c\u043e\u0442\u0440 \u0438 \u043f\u0435\u0440\u0432\u0438\u0447\u043d\u043e\u0435 \u043b\u0435\u0447\u0435\u043d\u0438\u0435 \u0434\u043b\u044f \u0431\u0435\u0437\u0434\u043e\u043c\u043d\u043e\u0433\u043e.",
+  d3h:"\u041d\u0430\u0431\u043e\u0440 \u0434\u043b\u044f \u0437\u0438\u043c\u043d\u0435\u0433\u043e \u0443\u043a\u0440\u044b\u0442\u0438\u044f",d3p:"\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b \u0434\u043b\u044f \u043e\u0434\u043d\u043e\u0433\u043e \u0443\u0442\u0435\u043f\u043b\u0451\u043d\u043d\u043e\u0433\u043e \u0443\u043a\u0440\u044b\u0442\u0438\u044f \u043d\u0430 2\u20133 \u043a\u043e\u0448\u043a\u0438.",
+  blog_eye:"\u041e\u0441\u043d\u043e\u0432\u0430\u0442\u0435\u043b\u044c \u0438 \u043a\u043b\u0438\u043d\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0436\u0443\u0440\u043d\u0430\u043b",blog_title:"\u0417\u0430 \u0434\u0432\u0438\u0436\u0435\u043d\u0438\u0435\u043c",
+  f_name:"Fatima",f_role:"\u041e\u0441\u043d\u043e\u0432\u0430\u0442\u0435\u043b\u044c \u00b7 \u0422\u0430\u0439\u043d\u044b\u0435 \u0414\u0440\u0443\u0437\u044c\u044f \u0416\u0438\u0432\u043e\u0442\u043d\u044b\u0445",
+  f_bio:"\u042f \u2014 \u0424\u0430\u0442\u0438\u043c\u0430, \u0443\u0447\u0435\u043d\u0438\u0446\u0430 11 \u043a\u043b\u0430\u0441\u0441\u0430 \u0448\u043a\u043e\u043b\u044b \u2116278 \u0422\u0430\u0448\u043a\u0435\u043d\u0442\u0430. \u041c\u0435\u0447\u0442\u0430\u044e \u0441\u0442\u0430\u0442\u044c \u0432\u0435\u0442\u0435\u0440\u0438\u043d\u0430\u0440\u043e\u043c. \u0412\u043e\u043b\u043e\u043d\u0442\u0451\u0440\u0438\u043b\u0430 \u0432 \u0432\u0435\u0442\u043a\u043b\u0438\u043d\u0438\u043a\u0435 \u0438 \u0441\u0435\u0439\u0447\u0430\u0441 \u0432\u043e\u043b\u043e\u043d\u0442\u0451\u0440 \u0432 \u0422\u0430\u0448\u043a\u0435\u043d\u0442\u0441\u043a\u043e\u043c \u0437\u043e\u043e\u043f\u0430\u0440\u043a\u0435. \u042f \u043e\u0441\u043d\u043e\u0432\u0430\u043b\u0430 \u0434\u0432\u0438\u0436\u0435\u043d\u0438\u0435, \u043f\u043e\u0442\u043e\u043c\u0443 \u0447\u0442\u043e \u043f\u043e\u0441\u0442\u043e\u044f\u043d\u043d\u043e \u0437\u0430\u043c\u0435\u0447\u0430\u043b\u0430 \u0436\u0438\u0432\u043e\u0442\u043d\u044b\u0445, \u043c\u0438\u043c\u043e \u043a\u043e\u0442\u043e\u0440\u044b\u0445 \u0432\u0441\u0435 \u043f\u0440\u043e\u0445\u043e\u0434\u0438\u043b\u0438 \u2014 \u0438 \u0440\u0435\u0448\u0438\u043b\u0430 \u043f\u0435\u0440\u0435\u0441\u0442\u0430\u0442\u044c \u043f\u0440\u043e\u0445\u043e\u0434\u0438\u0442\u044c \u043c\u0438\u043c\u043e.",
+  ed_h:"\u041d\u043e\u0432\u0430\u044f \u0437\u0430\u043f\u0438\u0441\u044c",ed_tl:"\u0417\u0430\u0433\u043e\u043b\u043e\u0432\u043e\u043a",ed_tg:"\u0422\u0435\u0433",ed_bd:"\u0422\u0435\u043a\u0441\u0442",ed_cancel:"\u041e\u0442\u043c\u0435\u043d\u0430",ed_pub:"\u041e\u043f\u0443\u0431\u043b\u0438\u043a\u043e\u0432\u0430\u0442\u044c",ed_photo:"\u0424\u043e\u0442\u043e (\u0432\u0441\u0442\u0430\u0432\u044c\u0442\u0435 URL \u0438\u043b\u0438 \u043e\u0441\u0442\u0430\u0432\u044c\u0442\u0435 \u043f\u0443\u0441\u0442\u044b\u043c)",art_photo:"\u0424\u043e\u0442\u043e (\u0432\u0441\u0442\u0430\u0432\u044c\u0442\u0435 URL \u0438\u043b\u0438 \u043e\u0441\u0442\u0430\u0432\u044c\u0442\u0435 \u043f\u0443\u0441\u0442\u044b\u043c)",
+  comm_eye:"\u0421\u0442\u0435\u043d\u0430 \u0441\u043e\u043e\u0431\u0449\u0435\u0441\u0442\u0432\u0430",comm_title:"\u0418\u0441\u0442\u043e\u0440\u0438\u0438 \u0438\u0437 \u0436\u0438\u0437\u043d\u0438",comm_sub:"\u0420\u0435\u0430\u043b\u044c\u043d\u044b\u0435 \u043b\u044e\u0434\u0438, \u0440\u0435\u0430\u043b\u044c\u043d\u044b\u0435 \u043f\u043e\u0441\u0442\u0443\u043f\u043a\u0438.",
+  cc_h:"\u041f\u043e\u043c\u043e\u0433\u043b\u0438 \u0431\u0435\u0437\u0434\u043e\u043c\u043d\u043e\u043c\u0443 \u0436\u0438\u0432\u043e\u0442\u043d\u043e\u043c\u0443 \u043d\u0430 \u044d\u0442\u043e\u0439 \u043d\u0435\u0434\u0435\u043b\u0435?",
+  cc_p:"\u041e\u0442\u043f\u0440\u0430\u0432\u044c\u0442\u0435 \u0444\u043e\u0442\u043e \u0438 \u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0441\u043b\u043e\u0432 \u0432 Telegram. \u0410\u043a\u043a\u0430\u0443\u043d\u0442 \u043d\u0435 \u043d\u0443\u0436\u0435\u043d.",
+  cc_btn:"\u041d\u0430\u043f\u0438\u0441\u0430\u0442\u044c \u0432 Telegram",
+  init_eye:"\u041d\u0430\u0448\u0430 \u0440\u0430\u0431\u043e\u0442\u0430",init_title:"\u0417\u0430\u0434\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u044b\u0435 \u0438\u043d\u0438\u0446\u0438\u0430\u0442\u0438\u0432\u044b",
+  init_sub:"\u041a\u0430\u0436\u0434\u044b\u0439 \u043f\u0440\u043e\u0435\u043a\u0442 \u043e\u0442\u0441\u043b\u0435\u0436\u0438\u0432\u0430\u0435\u0442\u0441\u044f \u0438 \u043e\u0442\u043a\u0440\u044b\u0442 \u0434\u043b\u044f \u0432\u0441\u0435\u0445.",
+  art_eye:"\u0421\u0442\u0430\u0442\u044c\u0438 \u043e\u0441\u043d\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u043d\u0438\u0446\u044b",art_title:"\u041f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u0438",
+  art_sub:"\u042d\u0441\u0441\u0435, \u0440\u0430\u0437\u043c\u044b\u0448\u043b\u0435\u043d\u0438\u044f \u0438 \u043a\u0440\u0443\u043f\u043d\u044b\u0435 \u043c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b \u043e \u0437\u0430\u0449\u0438\u0442\u0435 \u0436\u0438\u0432\u043e\u0442\u043d\u044b\u0445, \u0441\u043f\u0430\u0441\u0435\u043d\u0438\u0438 \u0438 \u0434\u0432\u0438\u0436\u0435\u043d\u0438\u0438.",
+  art_new_h:"\u041d\u043e\u0432\u0430\u044f \u0441\u0442\u0430\u0442\u044c\u044f",art_tl:"\u0417\u0430\u0433\u043e\u043b\u043e\u0432\u043e\u043a",art_st:"\u041f\u043e\u0434\u0437\u0430\u0433\u043e\u043b\u043e\u0432\u043e\u043a (\u043d\u0435\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e)",
+  art_cv:"\u041e\u0431\u043b\u043e\u0436\u043a\u0430 (\u044d\u043c\u043e\u0434\u0437\u0438 \u0438\u043b\u0438 \u0441\u0438\u043c\u0432\u043e\u043b)",art_bd:"\u0422\u0435\u043a\u0441\u0442 \u0441\u0442\u0430\u0442\u044c\u0438",
+  art_cancel:"\u041e\u0442\u043c\u0435\u043d\u0430",art_pub:"\u041e\u043f\u0443\u0431\u043b\u0438\u043a\u043e\u0432\u0430\u0442\u044c",
+  art_empty:"\u0421\u0442\u0430\u0442\u0435\u0439 \u043f\u043e\u043a\u0430 \u043d\u0435\u0442. \u041d\u0430\u0436\u043c\u0438\u0442\u0435 \u043a\u043d\u043e\u043f\u043a\u0443 \u0430\u0434\u043c\u0438\u043d\u0430, \u0447\u0442\u043e\u0431\u044b \u043e\u043f\u0443\u0431\u043b\u0438\u043a\u043e\u0432\u0430\u0442\u044c \u043f\u0435\u0440\u0432\u0443\u044e.",
+  f_copy:"\u0422\u0430\u0448\u043a\u0435\u043d\u0442, \u0423\u0437\u0431\u0435\u043a\u0438\u0441\u0442\u0430\u043d \u00b7 \u0428\u043a\u043e\u043b\u044c\u043d\u043e\u0435 \u0434\u0432\u0438\u0436\u0435\u043d\u0438\u0435 \u00b7 \u0422\u043e\u043b\u044c\u043a\u043e \u0437\u0430\u0431\u043e\u0442\u0430, \u043d\u0438\u043a\u0430\u043a\u043e\u0439 \u043f\u0440\u0438\u0431\u044b\u043b\u0438",
+  badge_free:"\u0411\u0435\u0441\u043f\u043b\u0430\u0442\u043d\u044b\u0439 \u043f\u0440\u0438\u0451\u043c",badge_24h:"\u041a\u0440\u0443\u0433\u043b\u043e\u0441\u0443\u0442\u043e\u0447\u043d\u043e"
+},
+uz:{
+  org_short:"Yashirin Do'stlar",hero_eye:"Maktab harakati · Toshkent, O'zbekiston",
+  hero_title_em:"Yashirin Do'stlar",hero_title_of:"hayvonlarning",
+  hero_sub:"Ko'cha hayvonlarining hayotini yaxshilash uchun jimgina ishlayotgan o'quvchilar harakati.",
+  manifesto:"\u00abHammani qutqarishingiz shart emas. Faqat ko'ring \u2014 haqiqatan ko'ring \u2014 va imkoningiz bor joyda qiling.\u00bb",
+  manifesto_cite:"\u2014 Hayvonlarning Yashirin Do'stlari Manifesti",
+  btn_help:"Hayvon topdingizmi? Boshlang",btn_join:"Harakatga qo'shiling",
+  stat1:"Hayvonlarga yordam berildi",stat2:"Qishki boshpana qurildi",stat4:"Harakatdagi tillar",
+  c1h:"Ko'cha hayvoniga qanday yordam berish",c1p:"Bosqichma-bosqich qutqaruv ko'rsatmasi, birinchi yordam.",
+  c2h:"Klinikalar va boshpanalar",c2p:"Toshkentdagi veterinar klinikalar va boshpanalar.",
+  c3h:"Klinik jurnal",c3p:"Veterinarlik amaliyotidan qaydlar.",
+  c4h:"Jamiyat devori",c4p:"Bu hafta ko'cha hayvoniga yordam berganlarning suratlari.",
+  c5h:"Bizning tashabbuslar",c5p:"Qishki boshpanalar, maktab gazetasi, kengaytirish rejalari.",
+  c6h:"Maqolalar",c6p:"Asoschining hayvon huquqlari bo'yicha esselari va mushohadlari.",
+  nav_home:"Bosh sahifa",nav_guide:"Qanday yordam berish",nav_dir:"Ma'lumotnoma",
+  nav_blog:"Asoschи va Blog",nav_comm:"Jamiyat",nav_init:"Tashabbuslar",nav_art:"Maqolalar",
+  adm_write:"Jurnal yozmoq",adm_art:"Yangi maqola",
+  guide_eye:"Qutqaruv qo'llanmasi",guide_title:"Hayvon topdingiz. Nima qilish kerak?",
+  guide_sub:"Ushbu bosqichlarni tartibda bajaring. Xotirjam bo'lish eng muhim narsa.",
+  gwh:"Qachon darhol mutaxassisni chaqirish kerak",gwb:" \u2014 Og'izdan ko'pik, aylanib yurish, asossiz tajovuz yoki falaj. Yaqinlashmang.",
+  aid_eye:"Birinchi yordam ma'lumotnomasi",aid_title:"Veterinar kelguncha",
+  aid_shock:"Shok",aid_wound:"Ochiq yara",aid_heat:"Issiqlik urishi",aid_dehy:"Suvsizlik",
+  sh1:"Fleece yoki sochiqqa o'rang \u2014 avval issiqlik",sh2:"Minimal muomala \u2014 bir marta tinch joyga",
+  sh3:"Na ovqat, na suv \u2014 veterinar suyuqlik yuboradi",sh4:"Har 2 daqiqada nafasni kuzating",
+  wo1:"Toza mato bilan 8\u201310 daqiqa bosim",wo2:"Faqat salin eritmasi yoki toza suv",
+  wo3:"O'rnatilgan jismlarni olib tashlashga urinmang",wo4:"Barcha tishlash jarohatlari \u2192 veterinar",
+  ht1:"Darhol soyaga yoki konditsionerli joyga",ht2:"Sovuq suv oyoq osti, qo'ltiq, bo'yinga \u2014 muz emas",
+  ht3:"Ho'l sochiq bilan yopmang \u2014 havo oqimi kerak",ht4:"30 daqiqa ichida veterinarga",
+  dh1:"Bo'yin terisini chimchilab qo'ying \u2014 sekin qaytish = suvsizlik",dh2:"Tez-tez kichik ho'plamlar",
+  dh3:"Nam ovqat quruqdan yaxshiroq",dh4:"Botiq ko'zlar \u2192 tomchilatish kerak",
+  dir_eye:"Toshkent ma'lumotnomasi",dir_title:"Klinikalar, boshpanalar va kontaktlar",
+  dir_sub:"Hayvon olib kelishdan oldin doim qo'ng'iroq qiling.",
+  don_title:"Harakatni qo'llab-quvvatlang",don_sub:"Har qanday hissa bevosita hayvon parvarishiga sarflanadi.",
+  d1h:"Bir haftalik ozuqa",d1p:"Bitta ko'cha hayvonini 7 kunlik ozuqa bilan ta'minlaydi.",
+  d2h:"Veterinar tashrifi",d2p:"Jarohatlangan ko'cha hayvonining asosiy ko'rigini qoplaydi.",
+  d3h:"Qishki boshpana to'plami",d3p:"2\u20133 mushuk uchun bitta boshpana quradigan materiallar.",
+  blog_eye:"Asoschи va klinik jurnal",blog_title:"Harakat ortida",
+  f_name:"Fatima",f_role:"Asoschи \u00b7 Hayvonlarning Yashirin Do'stlari",
+  f_bio:"Men «Hayvonlarning Yashirin Do'stlari»ni hamma o'tib ketadigan hayvonlarni ko'rganim uchun asos soldim. Men O'zbekistondan bo'lgan birinchi kurs aktuar fanlar talabasi bo'lib, mahalliy veterinar klinikada ko'ngilli ishlayapman.",
+  ed_h:"Yangi jurnal yozuvi",ed_tl:"Sarlavha",ed_tg:"Teg",ed_bd:"Matn",ed_cancel:"Bekor qilish",ed_pub:"Nashr qilish",ed_photo:"Rasm (URL kiriting yoki bo'sh qoldiring)",art_photo:"Rasm (URL kiriting yoki bo'sh qoldiring)",
+  comm_eye:"Jamiyat devori",comm_title:"Sahadagi hikoyalar",comm_sub:"Haqiqiy odamlar, haqiqiy ezgulik.",
+  cc_h:"Bu hafta ko'cha hayvoniga yordam berdingizmi?",
+  cc_p:"Surating va bir necha so'z yuboring. Hisob kerak emas.",cc_btn:"Telegram orqali ulashish",
+  init_eye:"Bizning ishimiz",init_title:"Hujjatlashtirilgan tashabbuslar",init_sub:"Har bir loyiha kuzatiladi va hammaga ochiq.",
+  art_eye:"Asoschining maqolalari",art_title:"Nashrlar",
+  art_sub:"Hayvon huquqlari, qutqaruv va talaba sifatida harakat qurish haqida esse va mulohazalar.",
+  art_new_h:"Yangi maqola",art_tl:"Sarlavha",art_st:"Kichik sarlavha (ixtiyoriy)",
+  art_cv:"Muqova (emoji yoki belgi)",art_bd:"Maqola matni",art_cancel:"Bekor qilish",art_pub:"Nashr qilish",
+  art_empty:"Hali maqolalar yo'q. Birinchisini nashr etish uchun admin tugmasini bosing.",
+  f_copy:"Toshkent, O'zbekiston \u00b7 Maktab harakati \u00b7 Faqat g'amxo'rlik",
+  badge_free:"Bepul qabul",badge_24h:"Kechayu-kunduz"
+}
+};
+
+var GUIDE_STEPS = {
+en:[
+  {t:"Observe from a distance (2\u20133 min)",b:"Watch before approaching. Is the animal injured? Nursing young? Cornered? This prevents startling it into traffic.",w:"Never approach a foaming, circling, or visibly rabid animal.",tip:""},
+  {t:"Approach slowly, low, and sideways",b:"Crouch down. Come from the side, not head-on. No direct eye contact. Extend the back of your hand for sniffing.",w:"",tip:"Speak in a low, steady monotone. High-pitched voices trigger alarm."},
+  {t:"Check for identification",b:"Look for a collar tag, ear tattoo, or microchip. Any vet clinic will scan for a chip for free. A lost pet and a true stray need completely different responses.",w:"",tip:""},
+  {t:"Contain safely",b:"A ventilated cardboard box lined with cloth. Keep in a quiet, warm, dim space. Handle as little as possible.",w:"Warmth is critical. Shock and cold kill faster than most visible injuries.",tip:""},
+  {t:"No food if surgery may be needed",b:"Small sips of water are usually safe. Food is not \u2014 a full stomach is a surgical risk. Let the vet advise.",w:"",tip:""},
+  {t:"Contact a rescue or vet within 2 hours",b:"Even if stable, internal injuries can worsen fast. Share your location, visible injuries, and observations. Many shelters accept strays for free.",w:"",tip:"Save these numbers before you need them."}
+],
+ru:[
+  {t:"\u041d\u0430\u0431\u043b\u044e\u0434\u0430\u0439\u0442\u0435 \u0441 \u0440\u0430\u0441\u0441\u0442\u043e\u044f\u043d\u0438\u044f (2\u20133 \u043c\u0438\u043d)",b:"\u0421\u043c\u043e\u0442\u0440\u0438\u0442\u0435 \u043f\u0440\u0435\u0436\u0434\u0435 \u0447\u0435\u043c \u0434\u0432\u0438\u0433\u0430\u0442\u044c\u0441\u044f. \u0416\u0438\u0432\u043e\u0442\u043d\u043e\u0435 \u0440\u0430\u043d\u0435\u043d\u043e? \u041a\u043e\u0440\u043c\u0438\u0442 \u0434\u0435\u0442\u0451\u043d\u044b\u0448\u0435\u0439? \u0417\u0430\u0433\u043d\u0430\u043d\u043e \u0432 \u0443\u0433\u043e\u043b?",w:"\u041d\u0435 \u043f\u0440\u0438\u0431\u043b\u0438\u0436\u0430\u0439\u0442\u0435\u0441\u044c \u043a \u0436\u0438\u0432\u043e\u0442\u043d\u043e\u043c\u0443 \u0441 \u043f\u0435\u043d\u043e\u0439 \u0438\u0437\u043e \u0440\u0442\u0430 \u0438\u043b\u0438 \u043f\u0440\u0438\u0437\u043d\u0430\u043a\u0430\u043c\u0438 \u0431\u0435\u0448\u0435\u043d\u0441\u0442\u0432\u0430.",tip:""},
+  {t:"\u041f\u0440\u0438\u0431\u043b\u0438\u0436\u0430\u0439\u0442\u0435\u0441\u044c \u043c\u0435\u0434\u043b\u0435\u043d\u043d\u043e, \u043d\u0438\u0437\u043a\u043e \u0438 \u0431\u043e\u043a\u043e\u043c",b:"\u041f\u0440\u0438\u0441\u044f\u0434\u044c\u0442\u0435. \u041f\u043e\u0434\u0445\u043e\u0434\u0438\u0442\u0435 \u0441\u0431\u043e\u043a\u0443, \u043d\u0435 \u0432 \u043b\u043e\u0431. \u0411\u0435\u0437 \u043f\u0440\u044f\u043c\u043e\u0433\u043e \u0437\u0440\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0433\u043e \u043a\u043e\u043d\u0442\u0430\u043a\u0442\u0430. \u041f\u0440\u043e\u0442\u044f\u043d\u0438\u0442\u0435 \u0442\u044b\u043b\u044c\u043d\u0443\u044e \u0441\u0442\u043e\u0440\u043e\u043d\u0443 \u0440\u0443\u043a\u0438.",w:"",tip:"\u0413\u043e\u0432\u043e\u0440\u0438\u0442\u0435 \u0440\u043e\u0432\u043d\u044b\u043c \u0442\u0438\u0445\u0438\u043c \u0442\u043e\u043d\u043e\u043c."},
+  {t:"\u041f\u0440\u043e\u0432\u0435\u0440\u044c\u0442\u0435 \u0438\u0434\u0435\u043d\u0442\u0438\u0444\u0438\u043a\u0430\u0446\u0438\u044e",b:"\u0411\u0438\u0440\u043a\u0430 \u043d\u0430 \u043e\u0448\u0435\u0439\u043d\u0438\u043a\u0435, \u0442\u0430\u0442\u0443\u0438\u0440\u043e\u0432\u043a\u0430 \u043d\u0430 \u0443\u0445\u0435 \u0438\u043b\u0438 \u043c\u0438\u043a\u0440\u043e\u0447\u0438\u043f. \u041b\u044e\u0431\u0430\u044f \u0432\u0435\u0442\u043a\u043b\u0438\u043d\u0438\u043a\u0430 \u0441\u043a\u0430\u043d\u0438\u0440\u0443\u0435\u0442 \u0431\u0435\u0441\u043f\u043b\u0430\u0442\u043d\u043e.",w:"",tip:""},
+  {t:"\u0411\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u043e\u0435 \u0441\u043e\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u0435",b:"\u041a\u0430\u0440\u0442\u043e\u043d\u043d\u0430\u044f \u043a\u043e\u0440\u043e\u0431\u043a\u0430 \u0441 \u0432\u0435\u043d\u0442\u0438\u043b\u044f\u0446\u0438\u0435\u0439, \u0437\u0430\u0441\u0442\u0435\u043b\u0435\u043d\u043d\u0430\u044f \u0442\u043a\u0430\u043d\u044c\u044e. \u0422\u0438\u0445\u043e\u0435, \u0442\u0451\u043f\u043b\u043e\u0435, \u0442\u0451\u043c\u043d\u043e\u0435 \u043c\u0435\u0441\u0442\u043e.",w:"\u0422\u0435\u043f\u043b\u043e \u043a\u0440\u0438\u0442\u0438\u0447\u043d\u043e. \u0428\u043e\u043a \u0438 \u0445\u043e\u043b\u043e\u0434 \u0443\u0431\u0438\u0432\u0430\u044e\u0442 \u0431\u044b\u0441\u0442\u0440\u0435\u0435 \u0431\u043e\u043b\u044c\u0448\u0438\u043d\u0441\u0442\u0432\u0430 \u0442\u0440\u0430\u0432\u043c.",tip:""},
+  {t:"\u041d\u0435 \u0434\u0430\u0432\u0430\u0439\u0442\u0435 \u0435\u0434\u0443 \u0435\u0441\u043b\u0438 \u0432\u043e\u0437\u043c\u043e\u0436\u043d\u0430 \u043e\u043f\u0435\u0440\u0430\u0446\u0438\u044f",b:"\u041d\u0435\u0431\u043e\u043b\u044c\u0448\u0438\u0435 \u0433\u043b\u043e\u0442\u043a\u0438 \u0432\u043e\u0434\u044b \u043e\u0431\u044b\u0447\u043d\u043e \u0431\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u044b. \u0415\u0434\u0430 \u2014 \u043d\u0435\u0442. \u041f\u043e\u043b\u043d\u044b\u0439 \u0436\u0435\u043b\u0443\u0434\u043e\u043a \u2014 \u0445\u0438\u0440\u0443\u0440\u0433\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0440\u0438\u0441\u043a.",w:"",tip:""},
+  {t:"\u0421\u0432\u044f\u0436\u0438\u0442\u0435\u0441\u044c \u0441 \u0432\u0435\u0442\u0435\u0440\u0438\u043d\u0430\u0440\u043e\u043c \u0432 \u0442\u0435\u0447\u0435\u043d\u0438\u0435 2 \u0447\u0430\u0441\u043e\u0432",b:"\u0414\u0430\u0436\u0435 \u043f\u0440\u0438 \u0441\u0442\u0430\u0431\u0438\u043b\u044c\u043d\u043e\u043c \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0438 \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 \u0442\u0440\u0430\u0432\u043c\u044b \u0431\u044b\u0441\u0442\u0440\u043e \u0443\u0445\u0443\u0434\u0448\u0430\u044e\u0442\u0441\u044f.",w:"",tip:"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u0435 \u043d\u043e\u043c\u0435\u0440\u0430 \u0437\u0430\u0440\u0430\u043d\u0435\u0435."}
+],
+uz:[
+  {t:"Masofadan kuzating (2\u20133 daqiqa)",b:"Harakatlanishdan oldin kuzating. Hayvon jarohatlangan? Bolalariga qarayaptimi? Qo'rqib qolganmi?",w:"Og'izdan ko'pik, aylanib yurish yoki qutirgan hayvonga yaqinlashmang.",tip:""},
+  {t:"Sekin, past va yon tomondan yaqinlashing",b:"Cho'kkalang. Yon tomondan yaqinlashing. Ko'z aloqasiz. Qo'lingizning orqa tomonini uzating.",w:"",tip:"Past, xotirjam ohangda gapiring."},
+  {t:"Identifikatsiyani tekshiring",b:"Yoqa tegchasi, quloq tatuirovkasi yoki mikrokib. Har qanday veterinar bepul skanerlab beradi.",w:"",tip:""},
+  {t:"Xavfsiz joylashtirish",b:"Matoga o'ralgan shamollatilgan karton quti. Tinch, iliq, qorong'i joy. Iloji boricha kam ushlab turish.",w:"Issiqlik muhim. Shok va sovuq tezroq o'ldiradi.",tip:""},
+  {t:"Jarrohlik mumkin bo'lsa ovqat bermang",b:"Oz-ozdan suv ichirish odatda xavfsiz. Ovqat emas \u2014 to'la qorin jarrohlik xavfi.",w:"",tip:""},
+  {t:"2 soat ichida veterinarga murojaat qiling",b:"Barqaror ko'rinsa ham, ichki shikastlar tez yomonlashadi. Joylashuv va kuzatuvlaringizni ulashing.",w:"",tip:"Raqamlarni oldindan saqlang."}
+]
+};
+
+var DIR_DATA = [
+  {
+    type:{en:"Shelter",ru:"Приют",uz:"Boshpana"},
+    name:"Mehr",
+    desc:{
+      en:"Small volunteer-run shelter. Dogs only. Open 11:00–17:00.",
+      ru:"Небольшой волонтёрский приют. Только собаки. Работает с 11:00 до 17:00.",
+      uz:"Kichik ko'ngillilar boshpanasi. Faqat itlar. Ish vaqti 11:00–17:00."
+    },
+    phone:"+998 95 196 80 80",
+    instagram:"@mehr_shelter",
+    addr:{
+      en:"Guliston MFY, Pskent district, Tashkent region",
+      ru:"Гулистон МФЙ, Пскентский район, Ташкентская область",
+      uz:"Guliston MFY, Piskent tumani, Toshkent viloyati"
+    },
+    badges:["free"]
+  },
+  {
+    type:{en:"Shelter",ru:"Приют",uz:"Boshpana"},
+    name:"Hayot Animal Shelter",
+    desc:{
+      en:"Takes in stray cats and dogs.",
+      ru:"Принимает бездомных кошек и собак.",
+      uz:"Ko'cha mushuklari va itlarni qabul qiladi."
+    },
+    phone:"+998 90 357-44-77",
+    instagram:"@hayot_jizn",
+    addr:{
+      en:"Poselok Zafarabad, Kibray district, 111200",
+      ru:"Посёлок Зафарабад (бывш. Майский), Кибрайский район, 111200",
+      uz:"Zafar obod qishlog'i, Qibray tumani, 111200"
+    },
+    badges:["free"]
+  },
+  {
+    type:{en:"Veterinary clinic",ru:"Ветеринарная клиника",uz:"Veterinariya klinikasi"},
+    name:"Zoocenter",
+    desc:{
+      en:"Tests · Diagnostics · Specialists · Treatment & prevention · Rehabilitation · Vaccination, microchipping, travel certificates and more. Open daily 10:00–20:00. Vet 1: Diana +998 90 925 31 89 · Vet 2: +998 97 430 69 44",
+      ru:"Анализы · Диагностика · Узкопрофильные специалисты · Лечение и профилактика · Реабилитация и стационар · Вакцинация, чипирование, справки на выезд и многое другое. Ежедневно 10:00–20:00. Ветеринар 1: Диана +998 90 925 31 89 · Ветеринар 2: +998 97 430 69 44",
+      uz:"Tahlillar · Diagnostika · Tor mutaxassislar · Davolash va profilaktika · Reabilitatsiya va statsionar · Emlash, chipli belgi, chiqish ma'lumotnomasi va boshqalar. Har kuni 10:00–20:00. Veterinar 1: Diana +998 90 925 31 89 · Veterinar 2: +998 97 430 69 44"
+    },
+    phone:"+998 90 925 31 89",
+    instagram:"@zoocenter.vet",
+    addr:{
+      en:"Khamid Mirsalikhov St 9, Tashkent",
+      ru:"ул. Хамида Мирсалихова, 9, Ташкент",
+      uz:"Hamid Mirsalixov ko'chasi 9, Toshkent"
+    },
+    badges:[]
+  },
+  {
+    type:{en:"Animal protection org",ru:"ОЗЖ",uz:"Hayvonlarni himoya tashkiloti"},
+    name:"Mehr va Oqibat",
+    desc:{
+      en:"Animal welfare organisation helping with legal issues and animal cruelty cases. Hotline Mon–Fri 10:00–19:00.",
+      ru:"Общество защиты животных, помогающее в юридических вопросах и случаях жестокого обращения с животными. Горячая линия Пн–Пт 10:00–19:00.",
+      uz:"Hayvonlarni himoya qilish jamiyati — huquqiy masalalar va hayvonlarga nisbatan zo'ravonlik holatlarida yordam beradi. Ishonch telefoni Du–Ju 10:00–19:00."
+    },
+    phone:"+998 93 812 04 13",
+    website:"https://mehrvaoqibat.uz/en/",
+    addr:{en:"Tashkent",ru:"Ташкент",uz:"Toshkent"},
+    badges:[]
+  },
+  {
+    type:{en:"Urban cat project",ru:"Городской проект",uz:"Shahar loyihasi"},
+    name:"Mushukkent",
+    desc:{
+      en:"Programme for the protection, vaccination, and sterilisation of stray cats in the urban environment.",
+      ru:"Программа по защите, вакцинации и стерилизации уличных кошек в городской среде.",
+      uz:"Shahar muhitidagi ko'cha mushuklar ni himoya qilish, emlash va sterilizatsiya qilish dasturi."
+    },
+    phone:"",
+    instagram:"@mushukkent",
+    addr:{en:"Tashkent",ru:"Ташкент",uz:"Toshkent"},
+    badges:[]
+  }
+];
+
+var STORIES = [];
+
+var INITIATIVES = [
+  {
+    title:{en:"Winter Shelter Project",ru:"\u041f\u0440\u043e\u0435\u043a\u0442 \u0437\u0438\u043c\u043d\u0438\u0445 \u0443\u043a\u0440\u044b\u0442\u0438\u0439",uz:"Qishki boshpana loyihasi"},
+    desc:{en:"We designed and built insulated outdoor shelters for stray cats in our school neighbourhood. Each holds 2\u20133 cats and is waterproofed with repurposed materials.",
+    ru:"\u041c\u044b \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u0430\u043b\u0438 \u0438 \u043f\u043e\u0441\u0442\u0440\u043e\u0438\u043b\u0438 \u0443\u0442\u0435\u043f\u043b\u0451\u043d\u043d\u044b\u0435 \u0443\u043a\u0440\u044b\u0442\u0438\u044f \u0434\u043b\u044f \u0431\u0435\u0437\u0434\u043e\u043c\u043d\u044b\u0445 \u043a\u043e\u0448\u0435\u043a \u0432 \u0440\u0430\u0439\u043e\u043d\u0435 \u0448\u043a\u043e\u043b\u044b.",
+    uz:"Maktab atrofidagi ko'cha mushuklari uchun issiqlik saqlayotgan tashqi boshpanalar loyihalashtirib, qurib chiqardik."},
+    status:"active",metrics:[{v:"3",k:"shelters built"},{v:"~8",k:"cats housed"},{v:"2",k:"winters"}],emojis:["🏗️","🔨","❄️","🐱"]
+  },
+  {
+    title:{en:"School Bulletin Board",ru:"\u0428\u043a\u043e\u043b\u044c\u043d\u044b\u0439 \u0441\u0442\u0435\u043d\u0434",uz:"Maktab stendi"},
+    desc:{en:"A permanent bulletin board in our school with rotating content: rescue tips, animal facts, local shelter contacts, and community stories.",
+    ru:"\u041f\u043e\u0441\u0442\u043e\u044f\u043d\u043d\u044b\u0439 \u0441\u0442\u0435\u043d\u0434 \u0432 \u0448\u043a\u043e\u043b\u0435 \u0441 \u043e\u0431\u043d\u043e\u0432\u043b\u044f\u0435\u043c\u044b\u043c \u0441\u043e\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u0435\u043c.",
+    uz:"Maktabda doimiy stend: qutqaruv maslahatlari, hayvonlar haqida faktlar va jamiyat hikoyalari."},
+    status:"active",metrics:[{v:"1",k:"bulletin active"},{v:"monthly",k:"refresh"},{v:"200+",k:"students reached"}],emojis:["📌","📰","✏️"]
+  }
+];
+
+var DEFAULT_POSTS = [];
+
+var DEFAULT_ARTICLES = [];
+
+var lang = 'en';
+
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function setLang(l,el){
+  lang=l;
+  document.querySelectorAll('.lb').forEach(function(b){b.classList.remove('on');});
+  el.classList.add('on');
+  var t=T[l];
+  document.querySelectorAll('[data-key]').forEach(function(n){
+    var k=n.getAttribute('data-key');
+    if(t[k]!==undefined)n.textContent=t[k];
+  });
+  renderSteps(); renderDir(); renderInit(); renderBlog(); renderArticles();
+}
+
+function goPage(id,el){
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.nl').forEach(function(l){l.classList.remove('on');});
+  document.getElementById('pg-'+id).classList.add('on');
+  if(el)el.classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function renderSteps(){
+  var steps=GUIDE_STEPS[lang]||GUIDE_STEPS.en;
+  var h='';
+  steps.forEach(function(s,i){
+    h+='<div class="gstep"><div class="snum">'+(i+1)+'</div><div class="scon"><h4>'+esc(s.t)+'</h4><p>'+esc(s.b)+'</p>';
+    if(s.w)h+='<div class="swarn">\u26a0\ufe0f '+esc(s.w)+'</div>';
+    if(s.tip)h+='<span class="stip">\ud83d\udca1 '+esc(s.tip)+'</span>';
+    h+='</div></div>';
+  });
+  document.getElementById('guide-steps').innerHTML=h;
+}
+
+function renderDir(){
+  var t=T[lang];
+  var h='';
+  DIR_DATA.forEach(function(d){
+    var type_str = typeof d.type==='object' ? (d.type[lang]||d.type.en) : d.type;
+    var name_str = typeof d.name==='object' ? (d.name[lang]||d.name.en) : d.name;
+    var desc_str = typeof d.desc==='object' ? (d.desc[lang]||d.desc.en) : d.desc;
+    var addr_str = typeof d.addr==='object' ? (d.addr[lang]||d.addr.en) : d.addr;
+    h+='<div class="dcard"><div class="dtype">'+esc(type_str)+'</div><h4>'+esc(name_str)+'</h4><p>'+esc(desc_str)+'</p>';
+    if(d.badges&&d.badges.length){
+      h+='<div style="display:flex;gap:6px;margin-bottom:10px">';
+      d.badges.forEach(function(b){
+        var cls=b==='free'?'bfree':'b24';
+        var lbl=b==='free'?(t.badge_free||'Free'):(t.badge_24h||'24h');
+        h+='<span class="dbadge '+cls+'">'+lbl+'</span>';
+      });
+      h+='</div>';
+    }
+    h+='<div class="dcts">';
+    if(d.phone) h+='<div class="dct">📞 <a href="tel:'+d.phone.replace(/\s/g,'')+'">'+esc(d.phone)+'</a></div>';
+    if(d.instagram) h+='<div class="dct">📷 <a href="https://instagram.com/'+esc(d.instagram.replace('@',''))+'" target="_blank">'+esc(d.instagram)+'</a></div>';
+    if(d.website) h+='<div class="dct">🌐 <a href="'+esc(d.website)+'" target="_blank">'+esc(d.website.replace('https://',''))+'</a></div>';
+    h+='<div class="dct">📍 '+esc(addr_str)+'</div>';
+    h+='</div></div>';
+  });
+  document.getElementById('dir-grid').innerHTML=h;
+}
+
+function renderStories(){
+  var empty_msgs={
+    en:"Stories will appear here as the community shares them.<br>Send yours via Telegram above.",
+    ru:"Истории появятся здесь, когда сообщество начнёт делиться ими.<br>Отправьте свою через Telegram выше.",
+    uz:"Jamiyat ulashgan sayin hikoyalar shu yerda paydo bo'ladi.<br>Siznikini yuqoridagi Telegram orqali yuboring."
+  };
+  if(!STORIES.length){
+    document.getElementById('stories-grid').innerHTML='<div style="grid-column:1/-1;padding:48px 0;text-align:center;color:var(--ink3);font-size:14px"><div style="font-size:40px;margin-bottom:16px">🐾</div><p>'+( empty_msgs[lang]||empty_msgs.en)+'</p></div>';
+    return;
+  }
+  var h='';
+  STORIES.forEach(function(s){
+    h+='<div class="scard"><div class="simg">'+s.emoji+'</div><div class="sbody"><div class="sauth">'+esc(s.author)+'</div><p>'+esc(s.text)+'</p></div></div>';
+  });
+  document.getElementById('stories-grid').innerHTML=h;
+}
+
+function renderInit(){
+  var sl={en:{active:'Active',planned:'Planned',complete:'Completed'},ru:{active:'\u0410\u043a\u0442\u0438\u0432\u043d\u043e',planned:'\u0417\u0430\u043f\u043b\u0430\u043d\u0438\u0440\u043e\u0432\u0430\u043d\u043e',complete:'\u0417\u0430\u0432\u0435\u0440\u0448\u0435\u043d\u043e'},uz:{active:'Faol',planned:'Rejalashtirilgan',complete:'Tugatilgan'}};
+  var s=sl[lang]||sl.en;
+  var h='';
+  INITIATIVES.forEach(function(it){
+    var sc=it.status==='active'?'sact':it.status==='planned'?'spln':'scmp';
+    h+='<div class="icard"><div class="ihead"><div><h3>'+esc(it.title[lang]||it.title.en)+'</h3></div><span class="sbadge '+sc+'">'+s[it.status]+'</span></div>';
+    h+='<div class="imetrics">';
+    it.metrics.forEach(function(m){h+='<div class="imet"><span class="v">'+esc(m.v)+'</span><span class="k">'+esc(m.k)+'</span></div>';});
+    h+='</div><p class="idesc">'+esc(it.desc[lang]||it.desc.en)+'</p>';
+    h+='<div class="prow">';
+    it.emojis.forEach(function(e){h+='<div class="pthumb">'+e+'</div>';});
+    h+='</div></div>';
+  });
+  document.getElementById('init-list').innerHTML=h;
+}
+
+function renderBlog(){
+  var saved=JSON.parse(localStorage.getItem('sfa_posts')||'[]');
+  var all=DEFAULT_POSTS.concat(saved).filter(function(p){return !p.lang||p.lang===lang;});
+  var tagC={clinic:'var(--slatep)',rescue:'var(--mossp)',tips:'var(--amberp)',update:'var(--paper2)'};
+  var tagT={clinic:'var(--slate)',rescue:'var(--moss)',tips:'var(--amber)',update:'var(--ink3)'};
+  var h='';
+  all.slice().reverse().forEach(function(p){
+    h+='<div class="bpost"><div class="bmeta"><span>'+esc(p.date||'')+'</span><span class="btag" style="background:'+tagC[p.tag]+';color:'+tagT[p.tag]+'">'+esc(p.tag)+'</span></div>';
+    h+='<h3>'+esc(p.title)+'</h3>';
+    if(p.photo) h+='<img src="'+esc(p.photo)+'" alt="" style="width:100%;max-height:320px;object-fit:cover;border-radius:var(--rl);margin:12px 0;display:block;"/>';
+    if(p.bodyHtml){h+='<div class="docx-content">'+p.bodyHtml+'</div>';}else{h+='<p>'+esc(p.body)+'</p>';}
+    if(sessionStorage.getItem('sfa_admin')==='1'){
+      h+='<button onclick="deletePost('+i+')" style="margin-top:10px;background:none;border:1px solid #c0392b;color:#c0392b;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer;">🗑 Delete entry</button>';
+    }
+    h+='</div>';
+  });
+  document.getElementById('blog-list').innerHTML=h;
+}
+
+function renderArticles(){
+  var saved=JSON.parse(localStorage.getItem('sfa_articles')||'[]');
+  var all=DEFAULT_ARTICLES.concat(saved).filter(function(a){return !a.lang||a.lang===lang;});
+  var t=T[lang];
+  if(!all.length){
+    document.getElementById('art-list').innerHTML='<p style="color:var(--ink3);font-size:14px;padding:32px 0">'+esc(t.art_empty||'No articles yet.')+'</p>';
+    return;
+  }
+  var h='';
+  all.slice().reverse().forEach(function(a,i){
+    var idx=all.length-1-i;
+    h+='<div class="acard" id="ac-'+idx+'">';
+    if(a.photo){
+      h+='<div class="acover" style="background:none;padding:0"><img src="'+esc(a.photo)+'" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"/></div>';
+    } else {
+      h+='<div class="acover">'+esc(a.cover||'\ud83d\udcd6')+'</div>';
+    }
+    h+='<div class="abody"><div class="ameta">'+esc(a.date||'')+'</div>';
+    h+='<h3 class="atitle">'+esc(a.title)+'</h3>';
+    if(a.subtitle)h+='<div class="asub">'+esc(a.subtitle)+'</div>';
+    if(a.bodyHtml){h+='<div class="atext docx-content">'+a.bodyHtml+'</div>';}else{h+='<div class="atext">'+esc(a.body).replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br/>')+'</div>';}
+    if(sessionStorage.getItem('sfa_admin')==='1'){
+      h+='<button onclick="deleteArticle('+idx+')" style="margin-top:12px;background:none;border:1px solid #c0392b;color:#c0392b;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer;">🗑 Delete article</button>';
+    }
+    h+='</div></div>';
+  });
+  document.getElementById('art-list').innerHTML=h;
+}
+
+function toggleEditor(){
+  if(sessionStorage.getItem('sfa_admin')!=='1'){adminUnlock();return;}
+  var ed=document.getElementById('beditor');
+  ed.style.display=ed.style.display==='block'?'none':'block';
+  if(ed.style.display==='block')goPage('blog');
+}
+
+function toggleArtEditor(){
+  if(sessionStorage.getItem('sfa_admin')!=='1'){adminUnlock();return;}
+  var ed=document.getElementById('art-editor');
+  ed.style.display=ed.style.display==='block'?'none':'block';
+  if(ed.style.display==='block')goPage('art');
+}
+
+function publishPost(){
+  var title=document.getElementById('ed-title').value.trim();
+  var bodyHtml=_blogDocxHtml||null;
+  var bodyText=document.getElementById('ed-body').value.trim();
+  var tag=document.getElementById('ed-tag').value;
+  if(!title||(bodyHtml===null&&!bodyText)){showToast('\u26a0\ufe0f Title and content required');return;}
+  var posts=JSON.parse(localStorage.getItem('sfa_posts')||'[]');
+  var now=new Date();
+  posts.push({title:title,body:bodyText,bodyHtml:bodyHtml,tag:tag,lang:lang,photo:document.getElementById('ed-photo')?document.getElementById('ed-photo').value.trim():'',date:now.toLocaleDateString('en-GB',{month:'long',year:'numeric'})});
+  localStorage.setItem('sfa_posts',JSON.stringify(posts));
+  ['ed-title'].forEach(function(id){document.getElementById(id).value='';});
+  if(document.getElementById('ed-photo'))document.getElementById('ed-photo').value='';
+  if(document.getElementById('ed-body'))document.getElementById('ed-body').value='';
+  clearBlogDoc();
+  document.getElementById('beditor').style.display='none';
+  renderBlog();
+  showToast('\u2713 Entry published!');
+}
+
+function publishArticle(){
+  var title=document.getElementById('art-title').value.trim();
+  var bodyHtml=_artDocxHtml||null;
+  var bodyText=document.getElementById('art-body').value.trim();
+  if(!title||(bodyHtml===null&&!bodyText)){showToast('\u26a0\ufe0f Title and content required');return;}
+  var arts=JSON.parse(localStorage.getItem('sfa_articles')||'[]');
+  var now=new Date();
+  arts.push({
+    title:title,
+    subtitle:document.getElementById('art-sub').value.trim(),
+    cover:document.getElementById('art-cover')?document.getElementById('art-cover').value.trim()||'\ud83d\udcd6':'\ud83d\udcd6',
+    photo:document.getElementById('art-photo')?document.getElementById('art-photo').value.trim():'',
+    body:bodyText,
+    bodyHtml:bodyHtml,
+    lang:lang,
+    date:now.toLocaleDateString('en-GB',{month:'long',year:'numeric'})
+  });
+  localStorage.setItem('sfa_articles',JSON.stringify(arts));
+  ['art-title','art-sub'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  if(document.getElementById('art-photo'))document.getElementById('art-photo').value='';
+  if(document.getElementById('art-body'))document.getElementById('art-body').value='';
+  clearArticleDoc();
+  document.getElementById('art-editor').style.display='none';
+  renderArticles();
+  showToast('\u2713 Article published!');
+}
+
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('on');
+  setTimeout(function(){t.classList.remove('on');},2800);
+}
+
+
+/* ── DOCX UPLOAD ── */
+var _artDocxHtml = null;
+var _blogDocxHtml = null;
+
+function loadDocxArticle(input){
+  var file = input.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var opts = {
+      arrayBuffer: e.target.result,
+      convertImage: mammoth.images.imgElement(function(image){
+        return image.read('base64').then(function(b64){
+          return {src: 'data:'+image.contentType+';base64,'+b64};
+        });
+      })
+    };
+    mammoth.convertToHtml(opts).then(function(result){
+      _artDocxHtml = result.value;
+      document.getElementById('art-preview').innerHTML = _artDocxHtml;
+      document.getElementById('art-preview-wrap').style.display = '';
+      document.getElementById('art-manual-wrap').style.display = 'none';
+      document.getElementById('art-drop-zone').style.display = 'none';
+      var titleEl = document.getElementById('art-title');
+      if(!titleEl.value){
+        titleEl.value = file.name.replace(/\.docx$/i,'').replace(/_/g,' ');
+      }
+    });
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function clearArticleDoc(){
+  _artDocxHtml = null;
+  document.getElementById('art-preview').innerHTML = '';
+  document.getElementById('art-preview-wrap').style.display = 'none';
+  document.getElementById('art-manual-wrap').style.display = '';
+  document.getElementById('art-drop-zone').style.display = '';
+  document.getElementById('art-docx-input').value = '';
+}
+
+function loadDocxBlog(input){
+  var file = input.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var opts = {
+      arrayBuffer: e.target.result,
+      convertImage: mammoth.images.imgElement(function(image){
+        return image.read('base64').then(function(b64){
+          return {src: 'data:'+image.contentType+';base64,'+b64};
+        });
+      })
+    };
+    mammoth.convertToHtml(opts).then(function(result){
+      _blogDocxHtml = result.value;
+      document.getElementById('blog-preview').innerHTML = _blogDocxHtml;
+      document.getElementById('blog-preview-wrap').style.display = '';
+      document.getElementById('blog-manual-wrap').style.display = 'none';
+      document.getElementById('blog-drop-zone').style.display = 'none';
+      var titleEl = document.getElementById('ed-title');
+      if(!titleEl.value){
+        titleEl.value = file.name.replace(/\.docx$/i,'').replace(/_/g,' ');
+      }
+    });
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function clearBlogDoc(){
+  _blogDocxHtml = null;
+  document.getElementById('blog-preview').innerHTML = '';
+  document.getElementById('blog-preview-wrap').style.display = 'none';
+  document.getElementById('blog-manual-wrap').style.display = '';
+  document.getElementById('blog-drop-zone').style.display = '';
+  document.getElementById('blog-docx-input').value = '';
+}
+
+
+function deleteArticle(idx){
+  if(!confirm('Delete this article?')) return;
+  var arts=JSON.parse(localStorage.getItem('sfa_articles')||'[]');
+  arts.splice(idx,1);
+  localStorage.setItem('sfa_articles',JSON.stringify(arts));
+  renderArticles();
+  showToast('\u2713 Article deleted');
+}
+
+function deletePost(idx){
+  if(!confirm('Delete this journal entry?')) return;
+  var posts=JSON.parse(localStorage.getItem('sfa_posts')||'[]');
+  // posts are rendered reversed, so convert index
+  var realIdx = posts.length - 1 - idx;
+  posts.splice(realIdx,1);
+  localStorage.setItem('sfa_posts',JSON.stringify(posts));
+  renderBlog();
+  showToast('\u2713 Entry deleted');
+}
+
+
+/* ── ADMIN AUTH ── */
+var ADMIN_HASH = -752650323;
+
+function jhash(s){
+  var h=0;
+  for(var i=0;i<s.length;i++){h=((h<<5)-h+s.charCodeAt(i))|0;}
+  return h;
+}
+
+function adminUnlock(){
+  var pw=prompt("Admin password:");
+  if(pw===null)return;
+  if(jhash(pw)===ADMIN_HASH){
+    sessionStorage.setItem('sfa_admin','1');
+    document.getElementById('abar-locked').style.display='none';
+    document.getElementById('abar-open').style.display='';
+    showToast('\u2713 Admin mode on');
+  }else{
+    showToast('\u2717 Wrong password');
+  }
+}
+
+function adminLock(){
+  sessionStorage.removeItem('sfa_admin');
+  document.getElementById('abar-locked').style.display='';
+  document.getElementById('abar-open').style.display='none';
+  document.getElementById('beditor').style.display='none';
+  document.getElementById('art-editor').style.display='none';
+}
+
+function checkAdminSession(){
+  if(sessionStorage.getItem('sfa_admin')==='1'){
+    document.getElementById('abar-locked').style.display='none';
+    document.getElementById('abar-open').style.display='';
+  }
+}
+
+renderSteps();renderDir();renderStories();renderInit();renderBlog();renderArticles();checkAdminSession();
+
+</script>
+</body>
+</html>
