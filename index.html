@@ -892,7 +892,11 @@ function renderBlog(){
     h+='<div class="bpost"><div class="bmeta"><span>'+esc(p.date||'')+'</span><span class="btag" style="background:'+tagC[p.tag]+';color:'+tagT[p.tag]+'">'+esc(p.tag)+'</span></div>';
     h+='<h3>'+esc(p.title)+'</h3>';
     if(p.photo) h+='<img src="'+esc(p.photo)+'" alt="" style="width:100%;max-height:320px;object-fit:cover;border-radius:var(--rl);margin:12px 0;display:block;"/>';
-    if(p.bodyHtml){h+='<div class="docx-content">'+p.bodyHtml+'</div></div>';}else{h+='<p>'+esc(p.body)+'</p></div>';}
+    if(p.bodyHtml){h+='<div class="docx-content">'+p.bodyHtml+'</div>';}else{h+='<p>'+esc(p.body)+'</p>';}
+    if(sessionStorage.getItem('sfa_admin')==='1'){
+      h+='<button onclick="deletePost('+i+')" style="margin-top:10px;background:none;border:1px solid #c0392b;color:#c0392b;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer;">🗑 Delete entry</button>';
+    }
+    h+='</div>';
   });
   document.getElementById('blog-list').innerHTML=h;
 }
@@ -918,6 +922,9 @@ function renderArticles(){
     h+='<h3 class="atitle">'+esc(a.title)+'</h3>';
     if(a.subtitle)h+='<div class="asub">'+esc(a.subtitle)+'</div>';
     if(a.bodyHtml){h+='<div class="atext docx-content">'+a.bodyHtml+'</div>';}else{h+='<div class="atext">'+esc(a.body).replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br/>')+'</div>';}
+    if(sessionStorage.getItem('sfa_admin')==='1'){
+      h+='<button onclick="deleteArticle('+idx+')" style="margin-top:12px;background:none;border:1px solid #c0392b;color:#c0392b;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer;">🗑 Delete article</button>';
+    }
     h+='</div></div>';
   });
   document.getElementById('art-list').innerHTML=h;
@@ -1053,6 +1060,27 @@ function clearBlogDoc(){
 }
 
 
+function deleteArticle(idx){
+  if(!confirm('Delete this article?')) return;
+  var arts=JSON.parse(localStorage.getItem('sfa_articles')||'[]');
+  arts.splice(idx,1);
+  localStorage.setItem('sfa_articles',JSON.stringify(arts));
+  renderArticles();
+  showToast('\u2713 Article deleted');
+}
+
+function deletePost(idx){
+  if(!confirm('Delete this journal entry?')) return;
+  var posts=JSON.parse(localStorage.getItem('sfa_posts')||'[]');
+  // posts are rendered reversed, so convert index
+  var realIdx = posts.length - 1 - idx;
+  posts.splice(realIdx,1);
+  localStorage.setItem('sfa_posts',JSON.stringify(posts));
+  renderBlog();
+  showToast('\u2713 Entry deleted');
+}
+
+
 /* ── ADMIN AUTH ── */
 var ADMIN_HASH = -752650323;
 
@@ -1095,3 +1123,4 @@ renderSteps();renderDir();renderStories();renderInit();renderBlog();renderArticl
 </script>
 </body>
 </html>
+
