@@ -797,7 +797,7 @@ function setLang(l,el){
     var k=n.getAttribute('data-key');
     if(t[k]!==undefined)n.textContent=t[k];
   });
-  renderSteps(); renderDir(); renderInit();
+  renderSteps(); renderDir(); renderInit(); renderBlog(); renderArticles();
 }
 
 function goPage(id,el){
@@ -884,7 +884,7 @@ function renderInit(){
 
 function renderBlog(){
   var saved=JSON.parse(localStorage.getItem('sfa_posts')||'[]');
-  var all=DEFAULT_POSTS.concat(saved);
+  var all=DEFAULT_POSTS.concat(saved).filter(function(p){return !p.lang||p.lang===lang;});
   var tagC={clinic:'var(--slatep)',rescue:'var(--mossp)',tips:'var(--amberp)',update:'var(--paper2)'};
   var tagT={clinic:'var(--slate)',rescue:'var(--moss)',tips:'var(--amber)',update:'var(--ink3)'};
   var h='';
@@ -903,7 +903,7 @@ function renderBlog(){
 
 function renderArticles(){
   var saved=JSON.parse(localStorage.getItem('sfa_articles')||'[]');
-  var all=DEFAULT_ARTICLES.concat(saved);
+  var all=DEFAULT_ARTICLES.concat(saved).filter(function(a){return !a.lang||a.lang===lang;});
   var t=T[lang];
   if(!all.length){
     document.getElementById('art-list').innerHTML='<p style="color:var(--ink3);font-size:14px;padding:32px 0">'+esc(t.art_empty||'No articles yet.')+'</p>';
@@ -952,7 +952,7 @@ function publishPost(){
   if(!title||(bodyHtml===null&&!bodyText)){showToast('\u26a0\ufe0f Title and content required');return;}
   var posts=JSON.parse(localStorage.getItem('sfa_posts')||'[]');
   var now=new Date();
-  posts.push({title:title,body:bodyText,bodyHtml:bodyHtml,tag:tag,photo:document.getElementById('ed-photo')?document.getElementById('ed-photo').value.trim():'',date:now.toLocaleDateString('en-GB',{month:'long',year:'numeric'})});
+  posts.push({title:title,body:bodyText,bodyHtml:bodyHtml,tag:tag,lang:lang,photo:document.getElementById('ed-photo')?document.getElementById('ed-photo').value.trim():'',date:now.toLocaleDateString('en-GB',{month:'long',year:'numeric'})});
   localStorage.setItem('sfa_posts',JSON.stringify(posts));
   ['ed-title'].forEach(function(id){document.getElementById(id).value='';});
   if(document.getElementById('ed-photo'))document.getElementById('ed-photo').value='';
@@ -977,6 +977,7 @@ function publishArticle(){
     photo:document.getElementById('art-photo')?document.getElementById('art-photo').value.trim():'',
     body:bodyText,
     bodyHtml:bodyHtml,
+    lang:lang,
     date:now.toLocaleDateString('en-GB',{month:'long',year:'numeric'})
   });
   localStorage.setItem('sfa_articles',JSON.stringify(arts));
@@ -1005,13 +1006,20 @@ function loadDocxArticle(input){
   if(!file) return;
   var reader = new FileReader();
   reader.onload = function(e){
-    mammoth.convertToHtml({arrayBuffer: e.target.result}).then(function(result){
+    var opts = {
+      arrayBuffer: e.target.result,
+      convertImage: mammoth.images.imgElement(function(image){
+        return image.read('base64').then(function(b64){
+          return {src: 'data:'+image.contentType+';base64,'+b64};
+        });
+      })
+    };
+    mammoth.convertToHtml(opts).then(function(result){
       _artDocxHtml = result.value;
       document.getElementById('art-preview').innerHTML = _artDocxHtml;
       document.getElementById('art-preview-wrap').style.display = '';
       document.getElementById('art-manual-wrap').style.display = 'none';
       document.getElementById('art-drop-zone').style.display = 'none';
-      // Auto-fill title from filename if empty
       var titleEl = document.getElementById('art-title');
       if(!titleEl.value){
         titleEl.value = file.name.replace(/\.docx$/i,'').replace(/_/g,' ');
@@ -1035,7 +1043,15 @@ function loadDocxBlog(input){
   if(!file) return;
   var reader = new FileReader();
   reader.onload = function(e){
-    mammoth.convertToHtml({arrayBuffer: e.target.result}).then(function(result){
+    var opts = {
+      arrayBuffer: e.target.result,
+      convertImage: mammoth.images.imgElement(function(image){
+        return image.read('base64').then(function(b64){
+          return {src: 'data:'+image.contentType+';base64,'+b64};
+        });
+      })
+    };
+    mammoth.convertToHtml(opts).then(function(result){
       _blogDocxHtml = result.value;
       document.getElementById('blog-preview').innerHTML = _blogDocxHtml;
       document.getElementById('blog-preview-wrap').style.display = '';
