@@ -125,6 +125,21 @@ nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,.95);backdrop-
 .bfree{background:var(--mossp);color:var(--moss);}
 .b24{background:var(--amberp);color:var(--amber);}
 
+
+/* DOCX rendered content */
+.docx-content{font-family:Georgia,'Times New Roman',serif;line-height:1.8;color:var(--ink1);font-size:15px;}
+.docx-content h1{font-size:1.6em;font-weight:700;margin:1.2em 0 .4em;}
+.docx-content h2{font-size:1.3em;font-weight:700;margin:1em 0 .3em;}
+.docx-content h3{font-size:1.1em;font-weight:600;margin:.8em 0 .2em;}
+.docx-content p{margin:.7em 0;}
+.docx-content strong,.docx-content b{font-weight:700;}
+.docx-content em,.docx-content i{font-style:italic;}
+.docx-content ul,.docx-content ol{padding-left:1.5em;margin:.5em 0;}
+.docx-content li{margin:.3em 0;}
+.docx-content table{width:100%;border-collapse:collapse;margin:1em 0;font-size:13px;}
+.docx-content td,.docx-content th{border:1px solid var(--border);padding:6px 10px;text-align:left;}
+.docx-content th{background:var(--surface2);font-weight:600;}
+
 /* DONATE */
 .donsec{background:var(--moss);border-radius:var(--rxl);padding:36px;color:#fff;margin-bottom:40px;}
 .donsec h3{font-family:var(--serif);font-size:26px;margin-bottom:8px;}
@@ -220,6 +235,7 @@ footer{background:var(--ink);color:#fff;padding:40px 0;margin-top:60px;}
   .acover{min-height:80px;}
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 </head>
 <body>
 
@@ -360,8 +376,21 @@ footer{background:var(--ink);color:#fff;padding:40px 0;margin-top:60px;}
      </select>
     </div>
    </div>
-   <div class="ef"><label data-key="ed_photo">Photo (paste image URL or leave blank)</label><input id="ed-photo" type="text" placeholder="https://i.imgur.com/yourphoto.jpg"/></div>
-   <div class="ef"><label data-key="ed_bd">Entry</label><textarea id="ed-body" placeholder="Write your journal entry here..."></textarea></div>
+   <div class="ef" style="border:2px dashed var(--moss);border-radius:var(--rl);padding:18px;background:var(--surface2);text-align:center;cursor:pointer" onclick="document.getElementById('blog-docx-input').click()" id="blog-drop-zone">
+     <div style="font-size:28px;margin-bottom:8px">📄</div>
+     <div style="font-weight:600;color:var(--ink1);margin-bottom:4px" data-key="blog_upload_label">Upload Word file (.docx)</div>
+     <div style="font-size:12px;color:var(--ink3)" data-key="blog_upload_hint">Click to browse — formatting is preserved automatically</div>
+     <input id="blog-docx-input" type="file" accept=".docx" style="display:none" onchange="loadDocxBlog(this)"/>
+   </div>
+   <div class="ef" id="blog-preview-wrap" style="display:none">
+     <label>Preview</label>
+     <div id="blog-preview" style="border:1px solid var(--border);border-radius:var(--rl);padding:20px;background:var(--surface);font-family:Georgia,serif;line-height:1.7;min-height:80px;max-height:340px;overflow-y:auto"></div>
+     <button type="button" onclick="clearBlogDoc()" style="margin-top:8px;background:none;border:none;color:var(--ink3);font-size:12px;cursor:pointer;padding:0">✕ Remove file</button>
+   </div>
+   <div class="ef" id="blog-manual-wrap">
+     <label data-key="ed_photo">Photo (paste image URL or leave blank)</label><input id="ed-photo" type="text" placeholder="https://i.imgur.com/yourphoto.jpg"/>
+     <label data-key="ed_bd" style="margin-top:12px;display:block">Or type your entry</label><textarea id="ed-body" placeholder="Write your journal entry here..."></textarea>
+   </div>
    <div class="eacts">
     <button class="bs2" onclick="document.getElementById('beditor').style.display='none'" data-key="ed_cancel">Cancel</button>
     <button class="bp" onclick="publishPost()">✓ <span data-key="ed_pub">Publish entry</span></button>
@@ -417,8 +446,21 @@ footer{background:var(--ink);color:#fff;padding:40px 0;margin-top:60px;}
     <div class="ef"><label data-key="art_cv">Cover (emoji)</label><input id="art-cover" type="text" placeholder="🌍" style="max-width:100px"/></div>
    </div>
    <div class="ef"><label data-key="art_st">Subtitle (optional)</label><input id="art-sub" type="text" placeholder="A brief framing sentence"/></div>
-   <div class="ef"><label data-key="art_photo">Photo (paste image URL or leave blank)</label><input id="art-photo" type="text" placeholder="https://i.imgur.com/yourphoto.jpg"/></div>
-   <div class="ef"><label data-key="art_bd">Article body</label><textarea id="art-body" placeholder="Write your article here. Use double line breaks for paragraphs." style="min-height:200px"></textarea></div>
+   <div class="ef" style="border:2px dashed var(--moss);border-radius:var(--rl);padding:18px;background:var(--surface2);text-align:center;cursor:pointer" onclick="document.getElementById('art-docx-input').click()" id="art-drop-zone">
+     <div style="font-size:28px;margin-bottom:8px">📄</div>
+     <div style="font-weight:600;color:var(--ink1);margin-bottom:4px">Upload Word file (.docx)</div>
+     <div style="font-size:12px;color:var(--ink3)">Click to browse — formatting preserved automatically</div>
+     <input id="art-docx-input" type="file" accept=".docx" style="display:none" onchange="loadDocxArticle(this)"/>
+   </div>
+   <div class="ef" id="art-preview-wrap" style="display:none">
+     <label>Preview</label>
+     <div id="art-preview" style="border:1px solid var(--border);border-radius:var(--rl);padding:20px;background:var(--surface);font-family:Georgia,serif;line-height:1.7;min-height:80px;max-height:420px;overflow-y:auto"></div>
+     <button type="button" onclick="clearArticleDoc()" style="margin-top:8px;background:none;border:none;color:var(--ink3);font-size:12px;cursor:pointer;padding:0">✕ Remove file and type manually</button>
+   </div>
+   <div class="ef" id="art-manual-wrap">
+     <label data-key="art_photo">Photo (paste image URL or leave blank)</label><input id="art-photo" type="text" placeholder="https://i.imgur.com/yourphoto.jpg"/>
+     <label data-key="art_bd" style="margin-top:12px;display:block">Or write your article here</label><textarea id="art-body" placeholder="Write your article here. Use double line breaks for paragraphs." style="min-height:160px"></textarea>
+   </div>
    <div class="eacts">
     <button class="bs2" onclick="document.getElementById('art-editor').style.display='none'" data-key="art_cancel">Cancel</button>
     <button class="bp" onclick="publishArticle()">✓ <span data-key="art_pub">Publish article</span></button>
@@ -850,7 +892,7 @@ function renderBlog(){
     h+='<div class="bpost"><div class="bmeta"><span>'+esc(p.date||'')+'</span><span class="btag" style="background:'+tagC[p.tag]+';color:'+tagT[p.tag]+'">'+esc(p.tag)+'</span></div>';
     h+='<h3>'+esc(p.title)+'</h3>';
     if(p.photo) h+='<img src="'+esc(p.photo)+'" alt="" style="width:100%;max-height:320px;object-fit:cover;border-radius:var(--rl);margin:12px 0;display:block;"/>';
-    h+='<p>'+esc(p.body)+'</p></div>';
+    if(p.bodyHtml){h+='<div class="docx-content">'+p.bodyHtml+'</div></div>';}else{h+='<p>'+esc(p.body)+'</p></div>';}
   });
   document.getElementById('blog-list').innerHTML=h;
 }
@@ -875,7 +917,7 @@ function renderArticles(){
     h+='<div class="abody"><div class="ameta">'+esc(a.date||'')+'</div>';
     h+='<h3 class="atitle">'+esc(a.title)+'</h3>';
     if(a.subtitle)h+='<div class="asub">'+esc(a.subtitle)+'</div>';
-    h+='<div class="atext">'+esc(a.body).replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br/>')+'</div>';
+    if(a.bodyHtml){h+='<div class="atext docx-content">'+a.bodyHtml+'</div>';}else{h+='<div class="atext">'+esc(a.body).replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br/>')+'</div>';}
     h+='</div></div>';
   });
   document.getElementById('art-list').innerHTML=h;
@@ -897,14 +939,18 @@ function toggleArtEditor(){
 
 function publishPost(){
   var title=document.getElementById('ed-title').value.trim();
-  var body=document.getElementById('ed-body').value.trim();
+  var bodyHtml=_blogDocxHtml||null;
+  var bodyText=document.getElementById('ed-body').value.trim();
   var tag=document.getElementById('ed-tag').value;
-  if(!title||!body){showToast('\u26a0\ufe0f Title and text required');return;}
+  if(!title||(bodyHtml===null&&!bodyText)){showToast('\u26a0\ufe0f Title and content required');return;}
   var posts=JSON.parse(localStorage.getItem('sfa_posts')||'[]');
   var now=new Date();
-  posts.push({title:title,body:body,tag:tag,photo:document.getElementById('ed-photo').value.trim(),date:now.toLocaleDateString('en-GB',{month:'long',year:'numeric'})});
+  posts.push({title:title,body:bodyText,bodyHtml:bodyHtml,tag:tag,photo:document.getElementById('ed-photo')?document.getElementById('ed-photo').value.trim():'',date:now.toLocaleDateString('en-GB',{month:'long',year:'numeric'})});
   localStorage.setItem('sfa_posts',JSON.stringify(posts));
-  ['ed-title','ed-photo','ed-body'].forEach(function(id){document.getElementById(id).value='';});
+  ['ed-title'].forEach(function(id){document.getElementById(id).value='';});
+  if(document.getElementById('ed-photo'))document.getElementById('ed-photo').value='';
+  if(document.getElementById('ed-body'))document.getElementById('ed-body').value='';
+  clearBlogDoc();
   document.getElementById('beditor').style.display='none';
   renderBlog();
   showToast('\u2713 Entry published!');
@@ -912,20 +958,25 @@ function publishPost(){
 
 function publishArticle(){
   var title=document.getElementById('art-title').value.trim();
-  var body=document.getElementById('art-body').value.trim();
-  if(!title||!body){showToast('\u26a0\ufe0f Title and text required');return;}
+  var bodyHtml=_artDocxHtml||null;
+  var bodyText=document.getElementById('art-body').value.trim();
+  if(!title||(bodyHtml===null&&!bodyText)){showToast('\u26a0\ufe0f Title and content required');return;}
   var arts=JSON.parse(localStorage.getItem('sfa_articles')||'[]');
   var now=new Date();
   arts.push({
     title:title,
     subtitle:document.getElementById('art-sub').value.trim(),
-    cover:document.getElementById('art-cover').value.trim()||'\ud83d\udcd6',
-    photo:document.getElementById('art-photo').value.trim(),
-    body:body,
+    cover:document.getElementById('art-cover')?document.getElementById('art-cover').value.trim()||'\ud83d\udcd6':'\ud83d\udcd6',
+    photo:document.getElementById('art-photo')?document.getElementById('art-photo').value.trim():'',
+    body:bodyText,
+    bodyHtml:bodyHtml,
     date:now.toLocaleDateString('en-GB',{month:'long',year:'numeric'})
   });
   localStorage.setItem('sfa_articles',JSON.stringify(arts));
-  ['art-title','art-sub','art-cover','art-photo','art-body'].forEach(function(id){document.getElementById(id).value='';});
+  ['art-title','art-sub'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  if(document.getElementById('art-photo'))document.getElementById('art-photo').value='';
+  if(document.getElementById('art-body'))document.getElementById('art-body').value='';
+  clearArticleDoc();
   document.getElementById('art-editor').style.display='none';
   renderArticles();
   showToast('\u2713 Article published!');
@@ -935,6 +986,70 @@ function showToast(msg){
   var t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('on');
   setTimeout(function(){t.classList.remove('on');},2800);
+}
+
+
+/* ── DOCX UPLOAD ── */
+var _artDocxHtml = null;
+var _blogDocxHtml = null;
+
+function loadDocxArticle(input){
+  var file = input.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    mammoth.convertToHtml({arrayBuffer: e.target.result}).then(function(result){
+      _artDocxHtml = result.value;
+      document.getElementById('art-preview').innerHTML = _artDocxHtml;
+      document.getElementById('art-preview-wrap').style.display = '';
+      document.getElementById('art-manual-wrap').style.display = 'none';
+      document.getElementById('art-drop-zone').style.display = 'none';
+      // Auto-fill title from filename if empty
+      var titleEl = document.getElementById('art-title');
+      if(!titleEl.value){
+        titleEl.value = file.name.replace(/\.docx$/i,'').replace(/_/g,' ');
+      }
+    });
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function clearArticleDoc(){
+  _artDocxHtml = null;
+  document.getElementById('art-preview').innerHTML = '';
+  document.getElementById('art-preview-wrap').style.display = 'none';
+  document.getElementById('art-manual-wrap').style.display = '';
+  document.getElementById('art-drop-zone').style.display = '';
+  document.getElementById('art-docx-input').value = '';
+}
+
+function loadDocxBlog(input){
+  var file = input.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    mammoth.convertToHtml({arrayBuffer: e.target.result}).then(function(result){
+      _blogDocxHtml = result.value;
+      document.getElementById('blog-preview').innerHTML = _blogDocxHtml;
+      document.getElementById('blog-preview-wrap').style.display = '';
+      document.getElementById('blog-manual-wrap').style.display = 'none';
+      document.getElementById('blog-drop-zone').style.display = 'none';
+      var titleEl = document.getElementById('ed-title');
+      if(!titleEl.value){
+        titleEl.value = file.name.replace(/\.docx$/i,'').replace(/_/g,' ');
+      }
+    });
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function clearBlogDoc(){
+  _blogDocxHtml = null;
+  document.getElementById('blog-preview').innerHTML = '';
+  document.getElementById('blog-preview-wrap').style.display = 'none';
+  document.getElementById('blog-manual-wrap').style.display = '';
+  document.getElementById('blog-drop-zone').style.display = '';
+  document.getElementById('blog-docx-input').value = '';
 }
 
 
